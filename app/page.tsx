@@ -14,39 +14,52 @@ export default function HomePage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-amber-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
+      <section className="relative bg-gradient-to-br from-amber-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-24 md:py-32 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center">
-            <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-6">
-              <Image
-                src="/MNEE_Logo.png"
-                alt="MNEE Logo"
-                width={80}
-                height={80}
-                className="w-16 h-16 md:w-20 md:h-20"
-              />
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-amber-600 to-amber-400 bg-clip-text text-transparent">
-                Accept Payments with <span className="text-amber-600 dark:text-amber-400">MNEE</span> Stablecoin
+            <div className="flex flex-col items-center gap-6 mb-8">
+              <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/30 dark:to-amber-800/30 p-4 shadow-lg animate-scale-in">
+                <Image
+                  src="/MNEE_Logo.png"
+                  alt="MNEE Logo"
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight">
+                <span className="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-400 bg-clip-text text-transparent">
+                  Accept Payments
+                </span>
+                <br />
+                <span className="text-gray-900 dark:text-gray-100">with MNEE Stablecoin</span>
               </h1>
             </div>
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-4 max-w-3xl mx-auto">
-              The world&apos;s fastest USD-backed stablecoin. Accept payments instantly with zero platform fees.
+            <p className="text-xl md:text-2xl lg:text-3xl text-gray-700 dark:text-gray-200 mb-4 max-w-4xl mx-auto font-medium">
+              The world&apos;s fastest USD-backed stablecoin
             </p>
-            <p className="text-lg text-gray-500 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-              Built on Ethereum (ERC-20). No KYC required. Direct payments from customer to creator.
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+              Accept payments instantly with zero platform fees. <br /> Built on Ethereum (ERC-20). No KYC required.
             </p>
-            <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm">
-              <div className="flex items-center gap-2 px-4 py-2 bg-amber-100 dark:bg-amber-900/20 rounded-full">
-                <svg className="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex flex-wrap justify-center gap-3 mb-10">
+              <div className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-full shadow-sm">
+                <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
-                <span className="font-semibold text-amber-700 dark:text-amber-300">Instant Settlements</span>
+                <span className="font-bold text-green-700 dark:text-green-300">Instant Settlements</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-amber-100 dark:bg-amber-900/20 rounded-full">
+              <div className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 border border-amber-200 dark:border-amber-800 rounded-full shadow-sm">
                 <svg className="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="font-semibold text-amber-700 dark:text-amber-300">Zero Platform Fees</span>
+                <span className="font-bold text-amber-700 dark:text-amber-300">Zero Platform Fees</span>
+              </div>
+              <div className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-800 rounded-full shadow-sm">
+                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <span className="font-bold text-blue-700 dark:text-blue-300">Non-Custodial</span>
               </div>
             </div>
             <div className="mb-8">
@@ -54,17 +67,23 @@ export default function HomePage() {
                 href="https://mnee.io/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-amber-600 dark:text-amber-400 hover:underline font-semibold"
+                className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-semibold transition-colors"
               >
-                Learn more about MNEE Stablecoin →
+                <span>Learn more about MNEE Stablecoin</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </a>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               {account ? (
                 <Link
                   href="/dashboard"
-                  className="px-8 py-4 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition text-lg font-semibold shadow-lg"
+                  className="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-500 text-white rounded-xl hover:from-amber-700 hover:to-amber-600 transition-all duration-200 text-lg font-bold shadow-xl hover:shadow-2xl flex items-center gap-2"
                 >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
                   Go to Dashboard
                 </Link>
               ) : (
@@ -74,9 +93,12 @@ export default function HomePage() {
               )}
               <Link
                 href="#how-it-works"
-                className="px-8 py-4 border-2 border-amber-600 text-amber-600 dark:text-amber-400 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition text-lg font-semibold"
+                className="px-8 py-4 border-2 border-amber-600 text-amber-600 dark:text-amber-400 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-all duration-200 text-lg font-bold flex items-center gap-2"
               >
                 Learn More
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </Link>
             </div>
           </div>
@@ -84,81 +106,83 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-white dark:bg-gray-800">
+      <section className="py-20 md:py-28 px-4 bg-white dark:bg-gray-800">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold text-center mb-4">Why Choose PayMNEE?</h2>
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
-            Built for creators, sellers, and business owners who want to accept payments without barriers
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition">
-              <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">Why Choose PayMNEE?</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Built for creators, sellers, and business owners who want to accept payments without barriers
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="group text-center p-6 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-xl transition-all duration-200 bg-gradient-to-br from-white to-gray-50/30 dark:from-gray-800 dark:to-gray-800/50">
+              <div className="w-16 h-16 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/30 dark:to-amber-800/30 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-md">
                 <svg className="w-8 h-8 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Secure & Direct</h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">Secure & Direct</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                 Payments go directly from customer to creator using MNEE stablecoin. No third-party holds your funds. You control your money.
               </p>
             </div>
 
-            <div className="text-center p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition">
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="group text-center p-6 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-green-300 dark:hover:border-green-700 hover:shadow-xl transition-all duration-200 bg-gradient-to-br from-white to-gray-50/30 dark:from-gray-800 dark:to-gray-800/50">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 dark:from-green-900/30 dark:to-emerald-800/30 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-md">
                 <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Instant Payments</h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">Instant Payments</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                 MNEE is the world&apos;s fastest stablecoin. Receive payments instantly on Ethereum blockchain. No waiting periods.
               </p>
             </div>
 
-            <div className="text-center p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition">
-              <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="group text-center p-6 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-xl transition-all duration-200 bg-gradient-to-br from-white to-gray-50/30 dark:from-gray-800 dark:to-gray-800/50">
+              <div className="w-16 h-16 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/30 dark:to-amber-800/30 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-md">
                 <svg className="w-8 h-8 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Zero Platform Fees</h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">Zero Platform Fees</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                 Zero platform fees. You keep 100% of what customers pay. Only pay standard Ethereum gas fees for transactions.
               </p>
             </div>
 
-            <div className="text-center p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition">
-              <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="group text-center p-6 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-yellow-300 dark:hover:border-yellow-700 hover:shadow-xl transition-all duration-200 bg-gradient-to-br from-white to-gray-50/30 dark:from-gray-800 dark:to-gray-800/50">
+              <div className="w-16 h-16 bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900/30 dark:to-yellow-800/30 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-md">
                 <svg className="w-8 h-8 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Automatic Content Unlocking</h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">Automatic Content Unlocking</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                 Automatically unlock premium content after verified payment. Blockchain-verified access control.
               </p>
             </div>
 
-            <div className="text-center p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition">
-              <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="group text-center p-6 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-xl transition-all duration-200 bg-gradient-to-br from-white to-gray-50/30 dark:from-gray-800 dark:to-gray-800/50">
+              <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-900/30 dark:to-indigo-800/30 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-md">
                 <svg className="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Easy Analytics</h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">Easy Analytics</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                 Track all your payments, see total earnings, and view transaction history in one dashboard.
               </p>
             </div>
 
-            <div className="text-center p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition">
-              <div className="w-16 h-16 bg-pink-100 dark:bg-pink-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="group text-center p-6 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-pink-300 dark:hover:border-pink-700 hover:shadow-xl transition-all duration-200 bg-gradient-to-br from-white to-gray-50/30 dark:from-gray-800 dark:to-gray-800/50">
+              <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-md">
                 <svg className="w-8 h-8 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3">24/7 Available</h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">24/7 Available</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                 Your payment page is always online. Customers can pay anytime, anywhere in the world.
               </p>
             </div>
@@ -167,54 +191,64 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 px-4 bg-gray-50 dark:bg-gray-900">
+      <section id="how-it-works" className="py-20 md:py-28 px-4 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold text-center mb-4">How It Works</h2>
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
-            Getting started is simple. Create your payment page in minutes and start accepting payments.
-          </p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">How It Works</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Getting started is simple. Create your payment page in minutes and start accepting payments.
+            </p>
+          </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             {/* For Creators */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 hover:shadow-xl transition-all duration-200">
               <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                <span className="w-10 h-10 bg-amber-600 text-white rounded-full flex items-center justify-center text-lg font-bold">1</span>
-                For Creators
+                <span className="w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-500 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-md">1</span>
+                <span className="text-gray-900 dark:text-gray-100">For Creators</span>
               </h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <div>
-                    <h4 className="font-semibold mb-1">Connect Your Wallet</h4>
+              <div className="space-y-5">
+                <div className="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Connect Your Wallet</h4>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">Link your Ethereum wallet to get started</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <div>
-                    <h4 className="font-semibold mb-1">Create Payment Page</h4>
+                <div className="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Create Payment Page</h4>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">Set up your page with items and prices</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <div>
-                    <h4 className="font-semibold mb-1">Share Your Link</h4>
+                <div className="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Share Your Link</h4>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">Share your payment page link with customers</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <div>
-                    <h4 className="font-semibold mb-1">Receive Payments</h4>
+                <div className="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Receive Payments</h4>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">Get paid directly to your wallet instantly</p>
                   </div>
                 </div>
@@ -222,45 +256,53 @@ export default function HomePage() {
             </div>
 
             {/* For Customers */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 hover:shadow-xl transition-all duration-200">
               <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                <span className="w-10 h-10 bg-amber-600 text-white rounded-full flex items-center justify-center text-lg font-bold">2</span>
-                For Customers
+                <span className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-md">2</span>
+                <span className="text-gray-900 dark:text-gray-100">For Customers</span>
               </h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <div>
-                    <h4 className="font-semibold mb-1">Visit Payment Page</h4>
+              <div className="space-y-5">
+                <div className="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Visit Payment Page</h4>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">Open the creator&apos;s payment page link</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <div>
-                    <h4 className="font-semibold mb-1">Connect Wallet</h4>
+                <div className="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Connect Wallet</h4>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">Link your wallet to make a payment</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <div>
-                    <h4 className="font-semibold mb-1">Make Payment</h4>
+                <div className="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Make Payment</h4>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">Pay with MNEE tokens securely</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <div>
-                    <h4 className="font-semibold mb-1">Access Content</h4>
+                <div className="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Access Content</h4>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">Instantly unlock premium content</p>
                   </div>
                 </div>
@@ -271,84 +313,95 @@ export default function HomePage() {
       </section>
 
       {/* MNEE Stablecoin Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-gray-900 dark:to-gray-800">
+      <section className="py-20 md:py-28 px-4 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-gray-900 dark:to-gray-800">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <div className="flex justify-center items-center gap-4 mb-4">
-              <Image
-                src="/MNEE_Logo.png"
-                alt="MNEE Logo"
-                width={60}
-                height={60}
-                className="w-12 h-12 md:w-16 md:h-16"
-              />
-              <h2 className="text-4xl font-bold">Powered by MNEE Stablecoin</h2>
+          <div className="text-center mb-16">
+            <div className="flex justify-center items-center gap-4 mb-6">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white dark:bg-gray-800 p-3 shadow-lg">
+                <Image
+                  src="/MNEE_Logo.png"
+                  alt="MNEE Logo"
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100">Powered by MNEE Stablecoin</h2>
             </div>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-6">
+            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-6">
               MNEE is the world&apos;s fastest USD-backed stablecoin. Built for instant, low-cost global payments.
             </p>
             <a
               href="https://mnee.io/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-semibold"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-500 text-white rounded-xl hover:from-amber-700 hover:to-amber-600 transition-all duration-200 font-semibold shadow-md hover:shadow-lg"
             >
-              Visit MNEE.io →
+              Visit MNEE.io
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </a>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 text-center">
-              <div className="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-2">{'<'} 1s</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Settlement Time</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-700 text-center hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all duration-200">
+              <div className="text-4xl font-bold text-amber-600 dark:text-amber-400 mb-2">{'<'} 1s</div>
+              <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">Settlement Time</div>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 text-center">
-              <div className="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-2">{'<'} 1¢</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Transaction Cost</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-700 text-center hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all duration-200">
+              <div className="text-4xl font-bold text-amber-600 dark:text-amber-400 mb-2">{'<'} 1¢</div>
+              <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">Transaction Cost</div>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 text-center">
-              <div className="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-2">100%</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">USD Backed</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-700 text-center hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all duration-200">
+              <div className="text-4xl font-bold text-amber-600 dark:text-amber-400 mb-2">100%</div>
+              <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">USD Backed</div>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 text-center">
-              <div className="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-2">ERC-20</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Ethereum Network</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-700 text-center hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all duration-200">
+              <div className="text-4xl font-bold text-amber-600 dark:text-amber-400 mb-2">ERC-20</div>
+              <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">Ethereum Network</div>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 border border-gray-200 dark:border-gray-700">
-            <h3 className="text-2xl font-bold mb-4 text-center">Key Benefits of MNEE</h3>
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-8 border-2 border-gray-200 dark:border-gray-700 shadow-sm">
+            <h3 className="text-2xl font-bold mb-8 text-center text-gray-900 dark:text-gray-100">Key Benefits of MNEE</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div>
-                <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+              <div className="p-5 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-800">
+                <h4 className="font-bold mb-3 flex items-center gap-2 text-gray-900 dark:text-gray-100">
+                  <div className="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
                   Highly Scalable
                 </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-gray-700 dark:text-gray-300">
                   Processes transactions at an unparalleled rate, handling high volumes effortlessly.
                 </p>
               </div>
-              <div>
-                <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+              <div className="p-5 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+                <h4 className="font-bold mb-3 flex items-center gap-2 text-gray-900 dark:text-gray-100">
+                  <div className="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
                   Fully Regulated
                 </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-gray-700 dark:text-gray-300">
                   GENIUS Act compliant, licensed issuer, fully collateralized and transparent.
                 </p>
               </div>
-              <div>
-                <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+              <div className="p-5 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800">
+                <h4 className="font-bold mb-3 flex items-center gap-2 text-gray-900 dark:text-gray-100">
+                  <div className="w-8 h-8 rounded-lg bg-purple-500 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
                   Global 24/7
                 </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-gray-700 dark:text-gray-300">
                   Instant transactions settle globally, available 24/7 without restrictions.
                 </p>
               </div>
@@ -358,49 +411,49 @@ export default function HomePage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 px-4 bg-white dark:bg-gray-800">
+      <section className="py-20 md:py-28 px-4 bg-white dark:bg-gray-800">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Perfect For</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">Perfect For</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Built for creators, sellers, and business owners who want to accept payments without barriers
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-lg p-6 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-bold text-lg mb-2">Content Creators</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-xl p-6 border-2 border-amber-200 dark:border-amber-800 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all duration-200">
+              <h3 className="font-bold text-xl mb-3 text-gray-900 dark:text-gray-100">Content Creators</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                 Sell digital products, courses, or exclusive content. Accept payments instantly with no KYC.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-lg p-6 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-bold text-lg mb-2">Sellers & Merchants</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-xl p-6 border-2 border-amber-200 dark:border-amber-800 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all duration-200">
+              <h3 className="font-bold text-xl mb-3 text-gray-900 dark:text-gray-100">Sellers & Merchants</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                 Accept payments for products and services. Zero platform fees, instant settlements.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-lg p-6 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-bold text-lg mb-2">Business Owners</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-xl p-6 border-2 border-amber-200 dark:border-amber-800 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all duration-200">
+              <h3 className="font-bold text-xl mb-3 text-gray-900 dark:text-gray-100">Business Owners</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                 Streamline payment processing. Track all transactions with comprehensive analytics.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-lg p-6 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-bold text-lg mb-2">Educators</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-xl p-6 border-2 border-amber-200 dark:border-amber-800 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all duration-200">
+              <h3 className="font-bold text-xl mb-3 text-gray-900 dark:text-gray-100">Educators</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                 Accept payments for online courses and tutorials. Unlock content automatically after payment.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-lg p-6 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-bold text-lg mb-2">Artists & Musicians</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-xl p-6 border-2 border-amber-200 dark:border-amber-800 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all duration-200">
+              <h3 className="font-bold text-xl mb-3 text-gray-900 dark:text-gray-100">Artists & Musicians</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                 Sell artwork, music, or creative services. Get paid directly to your wallet.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-lg p-6 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-bold text-lg mb-2">Consultants</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-xl p-6 border-2 border-amber-200 dark:border-amber-800 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all duration-200">
+              <h3 className="font-bold text-xl mb-3 text-gray-900 dark:text-gray-100">Consultants</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                 Accept payments for services and consultations. Professional payment pages in minutes.
               </p>
             </div>
@@ -409,32 +462,39 @@ export default function HomePage() {
       </section>
 
       {/* Hackathon Section */}
-      <section className="py-20 px-4 bg-gray-50 dark:bg-gray-900">
+      <section className="py-20 md:py-28 px-4 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto max-w-6xl">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 border border-gray-200 dark:border-gray-700">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">Programmable Money for Commerce</h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-10 border-2 border-gray-200 dark:border-gray-700">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">Programmable Money for Commerce</h2>
+              <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                 PayMNEE is built for the MNEE Hackathon, showcasing how programmable money can revolutionize creator payments and commerce infrastructure.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="p-6 bg-amber-50 dark:bg-amber-900/10 rounded-lg">
-                <h3 className="font-semibold text-lg mb-3">Solving Real Problems</h3>
-                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                  <li className="flex items-start gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-xl border-2 border-amber-200 dark:border-amber-800">
+                <h3 className="font-bold text-xl mb-4 text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  Solving Real Problems
+                </h3>
+                <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                  <li className="flex items-start gap-3">
                     <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>Eliminates KYC barriers for global creators</span>
                   </li>
-                  <li className="flex items-start gap-2">
+                  <li className="flex items-start gap-3">
                     <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>Enables instant, low-cost global payments</span>
                   </li>
-                  <li className="flex items-start gap-2">
+                  <li className="flex items-start gap-3">
                     <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -442,22 +502,29 @@ export default function HomePage() {
                   </li>
                 </ul>
               </div>
-              <div className="p-6 bg-amber-50 dark:bg-amber-900/10 rounded-lg">
-                <h3 className="font-semibold text-lg mb-3">Technical Excellence</h3>
-                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                  <li className="flex items-start gap-2">
+              <div className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+                <h3 className="font-bold text-xl mb-4 text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                  </div>
+                  Technical Excellence
+                </h3>
+                <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                  <li className="flex items-start gap-3">
                     <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>Non-custodial architecture - users control funds</span>
                   </li>
-                  <li className="flex items-start gap-2">
+                  <li className="flex items-start gap-3">
                     <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>Blockchain payment verification and monitoring</span>
                   </li>
-                  <li className="flex items-start gap-2">
+                  <li className="flex items-start gap-3">
                     <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -471,21 +538,25 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-amber-600 to-amber-500 text-white">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-xl mb-4 text-amber-100">
+      <section className="py-20 md:py-28 px-4 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        <div className="container mx-auto max-w-4xl text-center relative z-10">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Get Started?</h2>
+          <p className="text-xl md:text-2xl mb-4 text-amber-50 font-medium">
             Join creators, sellers, and business owners accepting payments with MNEE stablecoin
           </p>
-          <p className="text-lg mb-8 text-amber-200">
+          <p className="text-lg md:text-xl mb-10 text-amber-100">
             No KYC. Zero platform fees. Instant settlements.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {account ? (
               <Link
                 href="/dashboard"
-                className="px-8 py-4 bg-white text-amber-600 rounded-lg hover:bg-gray-100 transition text-lg font-semibold shadow-lg"
+                className="px-8 py-4 bg-white text-amber-600 rounded-xl hover:bg-gray-50 transition-all duration-200 text-lg font-bold shadow-xl hover:shadow-2xl flex items-center justify-center gap-2"
               >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
                 Go to Dashboard
               </Link>
             ) : (
@@ -495,93 +566,118 @@ export default function HomePage() {
             )}
             <Link
               href="#how-it-works"
-              className="px-8 py-4 border-2 border-white text-white rounded-lg hover:bg-white/10 transition text-lg font-semibold"
+              className="px-8 py-4 border-2 border-white text-white rounded-xl hover:bg-white/10 transition-all duration-200 text-lg font-bold flex items-center justify-center gap-2"
             >
               Learn More
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </Link>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12 px-4">
+      <footer className="bg-gray-900 text-gray-400 py-16 px-4">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             <div>
-              <h3 className="text-white font-bold text-xl mb-4">PayMNEE</h3>
-              <p className="text-sm mb-4">
+              <div className="flex items-center gap-2 mb-4">
+                <Image
+                  src="/MNEE_Logo.png"
+                  alt="MNEE Logo"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8"
+                />
+                <h3 className="text-white font-bold text-xl">PayMNEE</h3>
+              </div>
+              <p className="text-sm mb-4 leading-relaxed">
                 A non-custodial payment platform for accepting MNEE stablecoin payments on Ethereum. Built for creators, sellers, and business owners.
               </p>
               <div className="space-y-2 text-sm">
-                <a href="https://mnee.io/" target="_blank" rel="noopener noreferrer" className="block text-amber-400 hover:text-amber-300">
-                  MNEE.io →
+                <a href="https://mnee.io/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors font-medium">
+                  <span>MNEE.io</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Project Links</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="text-white font-bold mb-4">Project Links</h4>
+              <ul className="space-y-3 text-sm">
                 <li>
-                  <a href="https://github.com/AdityaBirangal/PayMNEE" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300">
-                    GitHub →
+                  <a href="https://github.com/AdityaBirangal/PayMNEE" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors">
+                    <span>GitHub</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   </a>
                 </li>
                 <li>
-                  <a href="http://paymnee.birangal.com/" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300">
-                    Live Demo →
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-4">Connect</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href="https://www.linkedin.com/in/AdityaBirangal" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300">
-                    LinkedIn →
-                  </a>
-                </li>
-                <li>
-                  <a href="https://x.com/AdityaBirangal" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300">
-                    X (Twitter) →
-                  </a>
-                </li>
-                <li>
-                  <a href="https://farcaster.xyz/adityabirangal" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300">
-                    Farcaster →
+                  <a href="http://paymnee.birangal.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors">
+                    <span>Live Demo</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="text-white font-bold mb-4">Connect</h4>
+              <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="/dashboard" className="hover:text-white transition">
+                  <a href="https://www.linkedin.com/in/AdityaBirangal" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors">
+                    <span>LinkedIn</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://x.com/AdityaBirangal" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors">
+                    <span>X (Twitter)</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://farcaster.xyz/adityabirangal" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors">
+                    <span>Farcaster</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-bold mb-4">Quick Links</h4>
+              <ul className="space-y-3 text-sm">
+                <li>
+                  <Link href="/dashboard" className="text-amber-400 hover:text-amber-300 transition-colors">
                     Dashboard
                   </Link>
                 </li>
                 <li>
-                  <Link href="/purchases" className="hover:text-white transition">
+                  <Link href="/purchases" className="text-amber-400 hover:text-amber-300 transition-colors">
                     My Purchases
                   </Link>
                 </li>
                 <li>
-                  <a href="#how-it-works" className="hover:text-white transition">
+                  <a href="#how-it-works" className="text-amber-400 hover:text-amber-300 transition-colors">
                     How It Works
                   </a>
                 </li>
               </ul>
             </div>
-            <div>
-              <h4 className="text-white font-semibold mb-4">About</h4>
-              <p className="text-sm">
-                Built on Ethereum blockchain. Secure, transparent, and decentralized payments for everyone.
-              </p>
-            </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-            <p>© 2024 PayMNEE. All rights reserved.</p>
+          <div className="border-t border-gray-800 pt-8 text-center">
+            <p className="text-sm">© 2024 PayMNEE. All rights reserved.</p>
+            <p className="text-xs text-gray-500 mt-2">Built on Ethereum blockchain. Secure, transparent, and decentralized payments for everyone.</p>
           </div>
         </div>
       </footer>
