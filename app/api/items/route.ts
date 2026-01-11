@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { extractWalletFromBody } from '@/lib/auth';
+import { createErrorResponse, validateString, validateNumber, sanitizeInput, sanitizeUrl, AppError } from '@/lib/errors';
 
 /**
  * POST /api/items
@@ -26,18 +27,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!title || typeof title !== 'string' || title.trim().length === 0) {
-      return NextResponse.json(
-        { error: 'Title is required' },
-        { status: 400 }
-      );
+    // Validate and sanitize inputs
+    const sanitizedTitle = sanitizeInput(validateString(title, 'Title', 1));
+    const sanitizedDescription = description ? sanitizeInput(description) : null;
+
+    if (sanitizedTitle.length > 200) {
+      throw new AppError('Title must be 200 characters or less', 'VALIDATION_ERROR', 400);
+    }
+
+    if (sanitizedDescription && sanitizedDescription.length > 2000) {
+      throw new AppError('Description must be 2000 characters or less', 'VALIDATION_ERROR', 400);
     }
 
     if (!type || !['fixed', 'open'].includes(type)) {
-      return NextResponse.json(
-        { error: 'Type must be "fixed" or "open"' },
-        { status: 400 }
-      );
+      throw new AppError('Type must be "fixed" or "open"', 'VALIDATION_ERROR', 400);
     }
 
     // Verify page ownership
@@ -56,20 +59,22 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate fixed price item
+    let sanitizedPrice: string | null = null;
     if (type === 'fixed') {
       if (!priceMnee || typeof priceMnee !== 'string' || priceMnee.trim().length === 0) {
-        return NextResponse.json(
-          { error: 'Price is required for fixed payment items' },
-          { status: 400 }
-        );
+        throw new AppError('Price is required for fixed payment items', 'VALIDATION_ERROR', 400);
       }
-      // Validate price is a valid number
-      const priceNum = parseFloat(priceMnee);
-      if (isNaN(priceNum) || priceNum <= 0) {
-        return NextResponse.json(
-          { error: 'Price must be a positive number' },
-          { status: 400 }
-        );
+      const priceNum = validateNumber(priceMnee, 'Price', 0);
+      sanitizedPrice = priceNum.toString();
+    }
+
+    // Validate and sanitize content URL if provided
+    let sanitizedContentUrl: string | null = null;
+    if (contentUrl) {
+      try {
+        sanitizedContentUrl = sanitizeUrl(contentUrl);
+      } catch (err) {
+        throw new AppError('Invalid content URL format', 'VALIDATION_ERROR', 400);
       }
     }
 
@@ -77,11 +82,11 @@ export async function POST(request: NextRequest) {
     const item = await prisma.paymentItem.create({
       data: {
         pageId: pageId,
-        title: title.trim(),
-        description: description?.trim() || null,
+        title: sanitizedTitle,
+        description: sanitizedDescription,
         type: type,
-        priceMnee: type === 'fixed' ? priceMnee.trim() : null,
-        contentUrl: contentUrl?.trim() || null,
+        priceMnee: sanitizedPrice,
+        contentUrl: sanitizedContentUrl,
       },
     });
 
@@ -99,9 +104,8 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error creating payment item:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    const errorResponse = createErrorResponse(error, 'Failed to create payment item');
+    const statusCode = error instanceof AppError ? error.statusCode : 500;
+    return NextResponse.json(errorResponse, { status: statusCode });
   }
 }

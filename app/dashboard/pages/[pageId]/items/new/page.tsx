@@ -5,12 +5,14 @@ import { useRouter, useParams } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { useWallet } from '@/components/wallet/WalletProvider';
+import { useToast } from '@/components/ui/ToastProvider';
 
 export default function NewPaymentItem() {
   const router = useRouter();
   const params = useParams();
   const pageId = params.pageId as string;
   const { walletAddress } = useWallet();
+  const { showToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -49,10 +51,13 @@ export default function NewPaymentItem() {
         throw new Error(data.error || 'Failed to create payment item');
       }
 
+      showToast('Payment item created successfully!', 'success');
       // Redirect back to page
       router.push(`/dashboard/pages/${pageId}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred';
+      setError(errorMessage);
+      showToast(errorMessage, 'error');
     } finally {
       setLoading(false);
     }
@@ -159,18 +164,20 @@ export default function NewPaymentItem() {
                 </p>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                  aria-label={loading ? 'Creating payment item...' : 'Create payment item'}
                 >
                   {loading ? 'Creating...' : 'Create Item'}
                 </button>
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="px-6 py-2 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="px-6 py-2 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                  aria-label="Cancel and go back"
                 >
                   Cancel
                 </button>

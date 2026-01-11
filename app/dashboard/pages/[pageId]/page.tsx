@@ -5,6 +5,8 @@ import { useRouter, useParams } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { useWallet } from '@/components/wallet/WalletProvider';
+import { useToast } from '@/components/ui/ToastProvider';
+import Skeleton from '@/components/ui/Skeleton';
 import Link from 'next/link';
 
 interface PaymentItem {
@@ -32,6 +34,7 @@ export default function PaymentPageDetail() {
   const params = useParams();
   const pageId = params.pageId as string;
   const { walletAddress } = useWallet();
+  const { showToast } = useToast();
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState<PaymentPage | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -89,13 +92,35 @@ export default function PaymentPageDetail() {
       const pageData = await pageResponse.json();
       if (pageData.success) {
         setPage(pageData.page);
+        showToast('Item deleted successfully', 'success');
       }
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Failed to delete item');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to delete item';
+      showToast(errorMessage, 'error');
     }
   };
 
   if (loading) {
+    return (
+      <ProtectedRoute>
+        <div className="min-h-screen">
+          <Header />
+          <main className="container mx-auto px-4 py-8">
+            <div className="max-w-4xl mx-auto space-y-6">
+              <Skeleton className="h-8 w-64" />
+              <Skeleton className="h-4 w-96" />
+              <div className="space-y-4 mt-8">
+                <Skeleton className="h-24 w-full" />
+                <Skeleton className="h-24 w-full" />
+              </div>
+            </div>
+          </main>
+        </div>
+      </ProtectedRoute>
+    );
+  }
+
+  if (error) {
     return (
       <ProtectedRoute>
         <div className="min-h-screen">

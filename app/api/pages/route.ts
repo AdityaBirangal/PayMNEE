@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { extractWalletFromBody, validateWalletAddress } from '@/lib/auth';
+import { createErrorResponse, validateString, sanitizeInput, AppError } from '@/lib/errors';
 
 /**
  * POST /api/pages
@@ -19,11 +20,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!title || typeof title !== 'string' || title.trim().length === 0) {
-      return NextResponse.json(
-        { error: 'Title is required' },
-        { status: 400 }
-      );
+    // Validate and sanitize inputs
+    const sanitizedTitle = sanitizeInput(validateString(title, 'Title', 1));
+    const sanitizedDescription = description ? sanitizeInput(description) : null;
+
+    // Limit title length
+    if (sanitizedTitle.length > 200) {
+      throw new AppError('Title must be 200 characters or less', 'VALIDATION_ERROR', 400);
+    }
+
+    // Limit description length
+    if (sanitizedDescription && sanitizedDescription.length > 2000) {
+      throw new AppError('Description must be 2000 characters or less', 'VALIDATION_ERROR', 400);
     }
 
     // Verify user exists (create if doesn't exist)
@@ -39,8 +47,8 @@ export async function POST(request: NextRequest) {
     const page = await prisma.paymentPage.create({
       data: {
         creatorWallet: walletValidation.address,
-        title: title.trim(),
-        description: description?.trim() || null,
+        title: sanitizedTitle,
+        description: sanitizedDescription,
       },
       include: {
         items: true,
@@ -59,10 +67,9 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error creating payment page:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    const errorResponse = createErrorResponse(error, 'Failed to create payment page');
+    const statusCode = error instanceof AppError ? error.statusCode : 500;
+    return NextResponse.json(errorResponse, { status: statusCode });
   }
 }
 
@@ -117,9 +124,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching payment pages:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    const errorResponse = createErrorResponse(error, 'Failed to fetch payment pages');
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }

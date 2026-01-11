@@ -8,6 +8,7 @@ import { useActiveAccount } from 'thirdweb/react';
 import Link from 'next/link';
 import { formatTokenAmount } from '@/lib/blockchain';
 import { shortenAddress } from '@/lib/wallet';
+import Skeleton from '@/components/ui/Skeleton';
 
 interface Analytics {
   success: boolean;
@@ -120,8 +121,10 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
 
             {loading ? (
-              <div className="text-center py-8">
-                <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+              <div className="space-y-6">
+                <Skeleton className="h-32 w-full" />
+                <Skeleton className="h-64 w-full" />
+                <Skeleton className="h-48 w-full" />
               </div>
             ) : (
               <div className="space-y-6">
@@ -144,8 +147,14 @@ export default function DashboardPage() {
 
                 {/* Payment Analytics */}
                 {analyticsLoading ? (
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                    <p className="text-gray-600 dark:text-gray-400">Loading analytics...</p>
+                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-4">
+                    <Skeleton className="h-6 w-48" />
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <Skeleton className="h-20" />
+                      <Skeleton className="h-20" />
+                      <Skeleton className="h-20" />
+                      <Skeleton className="h-20" />
+                    </div>
                   </div>
                 ) : analyticsError ? (
                   <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6">
@@ -157,35 +166,36 @@ export default function DashboardPage() {
                     {/* Summary Stats */}
                     <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                       <h2 className="text-xl font-semibold mb-4">Payment Summary</h2>
-                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div>
                           <p className="text-sm text-gray-600 dark:text-gray-400">Total Collected</p>
-                          <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                          <p className="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400 break-words">
                             {formatTokenAmount(BigInt(analytics.summary.totalAmount), 18)} USDA
                           </p>
                         </div>
                         <div>
                           <p className="text-sm text-gray-600 dark:text-gray-400">Total Payments</p>
-                          <p className="text-2xl font-bold">{analytics.summary.totalPayments}</p>
+                          <p className="text-xl sm:text-2xl font-bold">{analytics.summary.totalPayments}</p>
                         </div>
                         <div>
                           <p className="text-sm text-gray-600 dark:text-gray-400">Payment Pages</p>
-                          <p className="text-2xl font-bold">{analytics.summary.totalPages}</p>
+                          <p className="text-xl sm:text-2xl font-bold">{analytics.summary.totalPages}</p>
                         </div>
                         <div>
                           <p className="text-sm text-gray-600 dark:text-gray-400">Payment Items</p>
-                          <p className="text-2xl font-bold">{analytics.summary.totalItems}</p>
+                          <p className="text-xl sm:text-2xl font-bold">{analytics.summary.totalItems}</p>
                         </div>
                       </div>
                     </div>
 
                     {/* Payment Pages with Analytics */}
                     <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                     <h2 className="text-xl font-semibold">Your Payment Pages</h2>
                     <Link
                       href="/dashboard/pages/new"
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition whitespace-nowrap"
+                      aria-label="Create a new payment page"
                     >
                       Create New Page
                     </Link>
@@ -200,7 +210,7 @@ export default function DashboardPage() {
                             key={page.id}
                             className="border rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                           >
-                            <div className="flex items-start justify-between">
+                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                               <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-2">
                                   <Link
@@ -231,11 +241,12 @@ export default function DashboardPage() {
                                   )}
                                 </div>
                               </div>
-                              <div className="flex items-center gap-2 ml-4">
+                              <div className="flex items-center gap-2 sm:ml-4">
                                 <Link
                                   href={`/dashboard/pages/${page.id}`}
                                   className="px-3 py-1.5 text-sm border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition"
                                   onClick={(e) => e.stopPropagation()}
+                                  aria-label={`Edit ${page.title}`}
                                 >
                                   Edit
                                 </Link>

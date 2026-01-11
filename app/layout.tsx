@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ThirdWebProvider from "@/components/providers/ThirdWebProvider";
 import { WalletProvider } from "@/components/wallet/WalletProvider";
+import { ToastProvider } from "@/components/ui/ToastProvider";
 
 export const metadata: Metadata = {
   title: "PayMNEE - Accept MNEE Stablecoin Payments",
@@ -17,7 +18,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThirdWebProvider>
-          <WalletProvider>{children}</WalletProvider>
+          <WalletProvider>
+            <ToastProvider>
+              {children}
+            </ToastProvider>
+          </WalletProvider>
         </ThirdWebProvider>
       </body>
     </html>

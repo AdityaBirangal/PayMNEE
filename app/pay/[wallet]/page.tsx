@@ -8,6 +8,8 @@ import { useActiveAccount } from 'thirdweb/react';
 import { shortenAddress } from '@/lib/wallet';
 import { usePayment } from '@/hooks/usePayment';
 import { CHAIN_ID } from '@/lib/constants';
+import { useToast } from '@/components/ui/ToastProvider';
+import Skeleton from '@/components/ui/Skeleton';
 
 interface PaymentItem {
   id: string;
@@ -40,6 +42,7 @@ export default function PublicPaymentPage() {
   const walletAddress = params.wallet as string;
   const account = useActiveAccount();
   const { executePayment, loading: paymentLoading, error: paymentError, isCorrectChain } = usePayment();
+  const { showToast } = useToast();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<PublicPagesData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -88,17 +91,17 @@ export default function PublicPaymentPage() {
 
   const handlePayment = async () => {
     if (!account || !selectedItem || !data) {
-      alert('Please connect your wallet first');
+      showToast('Please connect your wallet first', 'error');
       return;
     }
 
     if (!isCorrectChain) {
-      alert(`Please switch to Sepolia testnet (Chain ID: ${CHAIN_ID})`);
+      showToast(`Please switch to Sepolia testnet (Chain ID: ${CHAIN_ID})`, 'error');
       return;
     }
 
     if (selectedItem.type === 'open' && (!customAmount || parseFloat(customAmount) <= 0)) {
-      alert('Please enter a valid amount');
+      showToast('Please enter a valid amount', 'error');
       return;
     }
 
@@ -115,6 +118,7 @@ export default function PublicPaymentPage() {
       onSuccess: (txHash) => {
         setTxHash(txHash);
         setPaymentStatus('success');
+        showToast('Payment successful! Redirecting...', 'success');
         // Redirect to success page after 2 seconds
         setTimeout(() => {
           router.push(`/payment/${txHash}/success`);
@@ -122,6 +126,7 @@ export default function PublicPaymentPage() {
       },
       onError: (error) => {
         setPaymentStatus('error');
+        showToast(error.message || 'Payment failed', 'error');
         console.error('Payment error:', error);
       },
     });
@@ -132,8 +137,14 @@ export default function PublicPaymentPage() {
       <div className="min-h-screen">
         <Header />
         <main className="container mx-auto px-4 py-8">
-          <div className="text-center">
-            <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+          <div className="max-w-4xl mx-auto space-y-6">
+            <Skeleton className="h-8 w-64" />
+            <Skeleton className="h-4 w-96" />
+            <div className="space-y-4 mt-8">
+              <Skeleton className="h-32 w-full" />
+              <Skeleton className="h-32 w-full" />
+              <Skeleton className="h-32 w-full" />
+            </div>
           </div>
         </main>
       </div>
@@ -187,7 +198,7 @@ export default function PublicPaymentPage() {
                           key={item.id}
                           className="border rounded-lg p-4 hover:border-blue-500 transition"
                         >
-                          <div className="flex items-start justify-between">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
                                 <h3 className="text-lg font-semibold">{item.title}</h3>
@@ -218,7 +229,8 @@ export default function PublicPaymentPage() {
                             </div>
                             <button
                               onClick={() => handlePayClick(item)}
-                              className="ml-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+                              className="w-full sm:w-auto sm:ml-4 px-4 sm:px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium whitespace-nowrap"
+                              aria-label={`Pay for ${item.title}`}
                             >
                               Pay
                             </button>
