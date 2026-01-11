@@ -9,7 +9,7 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     domains: [],
   },
-  // Security headers (some handled in middleware)
+  // Security headers (some handled in proxy)
   async headers() {
     return [
       {

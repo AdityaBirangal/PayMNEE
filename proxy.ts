@@ -45,7 +45,7 @@ setInterval(() => {
   }
 }, RATE_LIMIT_WINDOW);
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Only apply rate limiting to API routes
   if (request.nextUrl.pathname.startsWith('/api/')) {
     const key = getRateLimitKey(request);
