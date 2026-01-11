@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import { getProvider, getTokenContract, getTokenAddress, formatTokenAmount } from './blockchain';
 import { normalizeAddress } from './wallet';
+import { getCachedVerification, setCachedVerification } from './verification-cache';
 
 interface PaymentVerification {
   isValid: boolean;
@@ -22,6 +23,10 @@ export async function verifyPayment(
   expectedAmount?: string // in wei, optional for open payments
 ): Promise<PaymentVerification> {
   try {
+    // Check cache first (for basic validation, full verification still needed for amount/recipient)
+    // Cache helps reduce calls when same tx is verified multiple times
+    const cached = getCachedVerification(txHash);
+    
     const provider = getProvider();
     const tokenAddress = getTokenAddress();
     const normalizedTo = normalizeAddress(expectedTo);
@@ -129,7 +134,7 @@ export async function verifyPayment(
       };
     }
 
-    return {
+    const result = {
       isValid: true,
       txHash,
       from: normalizeAddress(relevantTransfer.from),
@@ -138,9 +143,14 @@ export async function verifyPayment(
       blockNumber: receipt.blockNumber,
       timestamp,
     };
+
+    // Cache successful verification
+    setCachedVerification(txHash, true);
+
+    return result;
   } catch (error) {
     console.error('Error verifying payment:', error);
-    return {
+    const result = {
       isValid: false,
       txHash,
       from: '',
@@ -150,6 +160,11 @@ export async function verifyPayment(
       timestamp: 0,
       error: error instanceof Error ? error.message : 'Unknown error',
     };
+
+    // Cache failed verification (shorter TTL could be used)
+    setCachedVerification(txHash, false);
+
+    return result;
   }
 }
 

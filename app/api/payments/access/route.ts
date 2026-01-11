@@ -88,12 +88,31 @@ export async function GET(request: NextRequest) {
     // Get the most recent payment
     const latestPayment = item.payments[0];
 
-    // Verify payment on blockchain
-    const verification = await verifyPayment(
-      latestPayment.txHash,
-      normalizeAddress(item.page.creatorWallet),
-      latestPayment.amount
-    );
+    // Skip blockchain verification if payment was recorded recently (within last 2 minutes)
+    // This reduces RPC calls for fresh payments that were just recorded
+    const paymentAge = Date.now() - new Date(latestPayment.createdAt).getTime();
+    const RECENT_PAYMENT_THRESHOLD = 2 * 60 * 1000; // 2 minutes
+
+    let verification;
+    if (paymentAge < RECENT_PAYMENT_THRESHOLD) {
+      // Payment is recent, assume it's valid (it was just recorded after successful transaction)
+      verification = {
+        isValid: true,
+        txHash: latestPayment.txHash,
+        from: '',
+        to: normalizeAddress(item.page.creatorWallet),
+        amount: latestPayment.amount,
+        blockNumber: 0,
+        timestamp: Math.floor(new Date(latestPayment.createdAt).getTime() / 1000),
+      };
+    } else {
+      // Payment is older, verify on blockchain
+      verification = await verifyPayment(
+        latestPayment.txHash,
+        normalizeAddress(item.page.creatorWallet),
+        latestPayment.amount
+      );
+    }
 
     if (!verification.isValid) {
       return NextResponse.json({

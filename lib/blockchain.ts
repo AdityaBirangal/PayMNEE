@@ -27,9 +27,15 @@ export const getRpcUrl = (): string => {
   return url;
 };
 
-// Create a provider for reading blockchain data
+// Singleton provider instance to reuse connections
+let providerInstance: ethers.JsonRpcProvider | null = null;
+
+// Create a provider for reading blockchain data (singleton pattern)
 export const getProvider = (): ethers.JsonRpcProvider => {
-  return new ethers.JsonRpcProvider(getRpcUrl());
+  if (!providerInstance) {
+    providerInstance = new ethers.JsonRpcProvider(getRpcUrl());
+  }
+  return providerInstance;
 };
 
 // Get token contract instance
