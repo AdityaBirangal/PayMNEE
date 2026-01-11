@@ -6,6 +6,8 @@ import Header from '@/components/layout/Header';
 import ConnectWallet from '@/components/wallet/ConnectWallet';
 import { useActiveAccount } from 'thirdweb/react';
 import { shortenAddress } from '@/lib/wallet';
+import { usePayment } from '@/hooks/usePayment';
+import { CHAIN_ID } from '@/lib/constants';
 
 interface PaymentItem {
   id: string;
@@ -36,11 +38,14 @@ export default function PublicPaymentPage() {
   const params = useParams();
   const walletAddress = params.wallet as string;
   const account = useActiveAccount();
+  const { executePayment, loading: paymentLoading, error: paymentError, isCorrectChain } = usePayment();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<PublicPagesData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<PaymentItem | null>(null);
   const [customAmount, setCustomAmount] = useState('');
+  const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
+  const [txHash, setTxHash] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPages = async () => {
@@ -73,13 +78,21 @@ export default function PublicPaymentPage() {
   };
 
   const handleCloseModal = () => {
+    if (paymentStatus === 'processing') return; // Don't close during payment
     setSelectedItem(null);
     setCustomAmount('');
+    setPaymentStatus('idle');
+    setTxHash(null);
   };
 
   const handlePayment = async () => {
-    if (!account || !selectedItem) {
+    if (!account || !selectedItem || !data) {
       alert('Please connect your wallet first');
+      return;
+    }
+
+    if (!isCorrectChain) {
+      alert(`Please switch to Sepolia testnet (Chain ID: ${CHAIN_ID})`);
       return;
     }
 
@@ -88,8 +101,31 @@ export default function PublicPaymentPage() {
       return;
     }
 
-    // TODO: Implement payment flow in Phase 5
-    alert('Payment flow will be implemented in Phase 5');
+    const amount = selectedItem.type === 'fixed' 
+      ? selectedItem.priceMnee! 
+      : customAmount;
+
+    setPaymentStatus('processing');
+
+    const hash = await executePayment({
+      itemId: selectedItem.id,
+      recipientAddress: data.creator.walletAddress,
+      amount: amount,
+      onSuccess: (txHash) => {
+        setTxHash(txHash);
+        setPaymentStatus('success');
+        // Close modal after 3 seconds
+        setTimeout(() => {
+          handleCloseModal();
+          setPaymentStatus('idle');
+          setTxHash(null);
+        }, 3000);
+      },
+      onError: (error) => {
+        setPaymentStatus('error');
+        console.error('Payment error:', error);
+      },
+    });
   };
 
   if (loading) {
@@ -271,18 +307,55 @@ export default function PublicPaymentPage() {
                       </p>
                     </div>
 
+                    {paymentStatus === 'success' ? (
+                      <div className="mb-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded">
+                        <p className="text-green-800 dark:text-green-200 font-semibold mb-2">
+                          ✓ Payment Successful!
+                        </p>
+                        {txHash && (
+                          <p className="text-xs text-green-600 dark:text-green-400 break-all">
+                            TX: {txHash}
+                          </p>
+                        )}
+                        <p className="text-sm text-green-700 dark:text-green-300 mt-2">
+                          Closing automatically...
+                        </p>
+                      </div>
+                    ) : paymentStatus === 'error' ? (
+                      <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded">
+                        <p className="text-red-800 dark:text-red-200 font-semibold mb-2">
+                          Payment Failed
+                        </p>
+                        <p className="text-sm text-red-600 dark:text-red-400">
+                          {paymentError || 'An error occurred. Please try again.'}
+                        </p>
+                      </div>
+                    ) : null}
+
+                    {!isCorrectChain && (
+                      <div className="mb-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded">
+                        <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                          ⚠ Please switch to Sepolia testnet to make payments
+                        </p>
+                      </div>
+                    )}
+
                     <div className="flex gap-3">
                       <button
                         onClick={handlePayment}
-                        className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+                        disabled={paymentLoading || paymentStatus === 'processing' || !isCorrectChain}
+                        className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        Pay {selectedItem.type === 'open' ? customAmount || '0' : selectedItem.priceMnee} USDA
+                        {paymentLoading || paymentStatus === 'processing' 
+                          ? 'Processing...' 
+                          : `Pay ${selectedItem.type === 'open' ? customAmount || '0' : selectedItem.priceMnee} USDA`}
                       </button>
                       <button
                         onClick={handleCloseModal}
-                        className="px-4 py-2 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
+                        disabled={paymentStatus === 'processing'}
+                        className="px-4 py-2 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
                       >
-                        Cancel
+                        {paymentStatus === 'processing' ? 'Processing...' : 'Cancel'}
                       </button>
                     </div>
                   </>
