@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { extractWalletFromBody } from '@/lib/auth';
+import { extractWalletFromBody, validateWalletAddress } from '@/lib/auth';
+import { normalizeAddress } from '@/lib/wallet';
 
 /**
  * POST /api/payments
@@ -122,6 +123,81 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error recording payment:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * GET /api/payments?txHash=0x...&wallet=0x...
+ * Get payment by transaction hash
+ */
+export async function GET(request: NextRequest) {
+  try {
+    const searchParams = request.nextUrl.searchParams;
+    const txHash = searchParams.get('txHash');
+    const walletAddress = searchParams.get('wallet');
+
+    if (!txHash) {
+      return NextResponse.json(
+        { error: 'Transaction hash is required' },
+        { status: 400 }
+      );
+    }
+
+    const payment = await prisma.payment.findUnique({
+      where: { txHash },
+      include: {
+        item: {
+          select: {
+            id: true,
+            title: true,
+            type: true,
+            contentUrl: true,
+          },
+        },
+      },
+    });
+
+    if (!payment) {
+      return NextResponse.json(
+        { error: 'Payment not found' },
+        { status: 404 }
+      );
+    }
+
+    // If wallet is provided, verify ownership
+    if (walletAddress) {
+      const walletValidation = validateWalletAddress(request);
+      if (walletValidation.isValid && walletValidation.address) {
+        const normalizedWallet = normalizeAddress(walletAddress);
+        const normalizedPayer = normalizeAddress(payment.payerWallet);
+        
+        if (normalizedWallet !== normalizedPayer) {
+          return NextResponse.json(
+            { error: 'Payment does not belong to this wallet' },
+            { status: 403 }
+          );
+        }
+      }
+    }
+
+    return NextResponse.json({
+      success: true,
+      payment: {
+        id: payment.id,
+        itemId: payment.itemId,
+        payerWallet: payment.payerWallet,
+        amount: payment.amount,
+        txHash: payment.txHash,
+        createdAt: payment.createdAt,
+        item: payment.item,
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching payment:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

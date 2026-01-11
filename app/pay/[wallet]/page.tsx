@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import ConnectWallet from '@/components/wallet/ConnectWallet';
 import { useActiveAccount } from 'thirdweb/react';
@@ -35,6 +35,7 @@ interface PublicPagesData {
 }
 
 export default function PublicPaymentPage() {
+  const router = useRouter();
   const params = useParams();
   const walletAddress = params.wallet as string;
   const account = useActiveAccount();
@@ -114,12 +115,10 @@ export default function PublicPaymentPage() {
       onSuccess: (txHash) => {
         setTxHash(txHash);
         setPaymentStatus('success');
-        // Close modal after 3 seconds
+        // Redirect to success page after 2 seconds
         setTimeout(() => {
-          handleCloseModal();
-          setPaymentStatus('idle');
-          setTxHash(null);
-        }, 3000);
+          router.push(`/payment/${txHash}/success`);
+        }, 2000);
       },
       onError: (error) => {
         setPaymentStatus('error');
