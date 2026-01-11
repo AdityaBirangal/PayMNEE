@@ -86,7 +86,7 @@ export default function DashboardPage() {
                 {/* Quick Actions */}
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                   <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <Link
                       href="/dashboard/pages/new"
                       className="p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition text-center"
@@ -107,6 +107,24 @@ export default function DashboardPage() {
                         </p>
                       </Link>
                     )}
+                    <Link
+                      href="/dashboard/test-verification"
+                      className="p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition text-center"
+                    >
+                      <h3 className="font-semibold">Test Verification</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        Test blockchain payment verification
+                      </p>
+                    </Link>
+                    <Link
+                      href="/purchases"
+                      className="p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition text-center"
+                    >
+                      <h3 className="font-semibold">My Purchases</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        View all your purchased content
+                      </p>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -17,12 +17,20 @@ export default function Header() {
         
         <nav className="flex items-center gap-6">
           {account && (
-            <Link
-              href="/dashboard"
-              className="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-400"
-            >
-              Dashboard
-            </Link>
+            <>
+              <Link
+                href="/dashboard"
+                className="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-400"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/purchases"
+                className="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-400"
+              >
+                My Purchases
+              </Link>
+            </>
           )}
           
           <div className="flex items-center gap-4">
