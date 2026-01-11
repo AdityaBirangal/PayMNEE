@@ -8,10 +8,11 @@ import { isValidAddress, normalizeAddress } from '@/lib/wallet';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { wallet: string } }
+  { params }: { params: Promise<{ wallet: string }> }
 ) {
   try {
-    const walletAddress = params.wallet;
+    const { wallet } = await params;
+    const walletAddress = wallet;
 
     if (!walletAddress || !isValidAddress(walletAddress)) {
       return NextResponse.json(

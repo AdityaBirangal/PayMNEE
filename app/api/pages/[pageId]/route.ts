@@ -8,9 +8,10 @@ import { validateWalletAddress } from '@/lib/auth';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { pageId: string } }
+  { params }: { params: Promise<{ pageId: string }> }
 ) {
   try {
+    const { pageId } = await params;
     const walletValidation = validateWalletAddress(request);
     if (!walletValidation.isValid || !walletValidation.address) {
       return NextResponse.json(
@@ -21,7 +22,7 @@ export async function GET(
 
     const page = await prisma.paymentPage.findFirst({
       where: {
-        id: params.pageId,
+        id: pageId,
         creatorWallet: walletValidation.address,
       },
       include: {
@@ -82,9 +83,10 @@ export async function GET(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { pageId: string } }
+  { params }: { params: Promise<{ pageId: string }> }
 ) {
   try {
+    const { pageId } = await params;
     const body = await request.json();
     const { walletAddress, title, description } = body;
 
@@ -99,7 +101,7 @@ export async function PATCH(
     // Verify ownership
     const existingPage = await prisma.paymentPage.findFirst({
       where: {
-        id: params.pageId,
+        id: pageId,
         creatorWallet: walletValidation.address,
       },
     });
@@ -113,7 +115,7 @@ export async function PATCH(
 
     // Update page
     const page = await prisma.paymentPage.update({
-      where: { id: params.pageId },
+      where: { id: pageId },
       data: {
         ...(title && { title: title.trim() }),
         ...(description !== undefined && { description: description?.trim() || null }),
@@ -144,9 +146,10 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { pageId: string } }
+  { params }: { params: Promise<{ pageId: string }> }
 ) {
   try {
+    const { pageId } = await params;
     const walletValidation = validateWalletAddress(request);
     if (!walletValidation.isValid || !walletValidation.address) {
       return NextResponse.json(
@@ -158,7 +161,7 @@ export async function DELETE(
     // Verify ownership
     const existingPage = await prisma.paymentPage.findFirst({
       where: {
-        id: params.pageId,
+        id: pageId,
         creatorWallet: walletValidation.address,
       },
     });
@@ -172,7 +175,7 @@ export async function DELETE(
 
     // Delete page (cascade will delete items and payments)
     await prisma.paymentPage.delete({
-      where: { id: params.pageId },
+      where: { id: pageId },
     });
 
     return NextResponse.json({

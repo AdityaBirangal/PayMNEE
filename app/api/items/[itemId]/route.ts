@@ -8,9 +8,10 @@ import { validateWalletAddress, extractWalletFromBody } from '@/lib/auth';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { itemId: string } }
+  { params }: { params: Promise<{ itemId: string }> }
 ) {
   try {
+    const { itemId } = await params;
     const walletValidation = validateWalletAddress(request);
     if (!walletValidation.isValid || !walletValidation.address) {
       return NextResponse.json(
@@ -21,7 +22,7 @@ export async function GET(
 
     const item = await prisma.paymentItem.findFirst({
       where: {
-        id: params.itemId,
+        id: itemId,
         page: {
           creatorWallet: walletValidation.address,
         },
@@ -79,9 +80,10 @@ export async function GET(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { itemId: string } }
+  { params }: { params: Promise<{ itemId: string }> }
 ) {
   try {
+    const { itemId } = await params;
     const body = await request.json();
     const { walletAddress, title, description, type, priceMnee, contentUrl } = body;
 
@@ -96,7 +98,7 @@ export async function PATCH(
     // Verify ownership
     const existingItem = await prisma.paymentItem.findFirst({
       where: {
-        id: params.itemId,
+        id: itemId,
         page: {
           creatorWallet: walletValidation.address,
         },
@@ -140,7 +142,7 @@ export async function PATCH(
 
     // Update item
     const item = await prisma.paymentItem.update({
-      where: { id: params.itemId },
+      where: { id: itemId },
       data: {
         ...(title && { title: title.trim() }),
         ...(description !== undefined && { description: description?.trim() || null }),
@@ -178,9 +180,10 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { itemId: string } }
+  { params }: { params: Promise<{ itemId: string }> }
 ) {
   try {
+    const { itemId } = await params;
     const walletValidation = validateWalletAddress(request);
     if (!walletValidation.isValid || !walletValidation.address) {
       return NextResponse.json(
@@ -192,7 +195,7 @@ export async function DELETE(
     // Verify ownership
     const existingItem = await prisma.paymentItem.findFirst({
       where: {
-        id: params.itemId,
+        id: itemId,
         page: {
           creatorWallet: walletValidation.address,
         },
@@ -208,7 +211,7 @@ export async function DELETE(
 
     // Delete item (cascade will delete payments)
     await prisma.paymentItem.delete({
-      where: { id: params.itemId },
+      where: { id: itemId },
     });
 
     return NextResponse.json({

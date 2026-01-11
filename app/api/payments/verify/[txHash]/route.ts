@@ -9,10 +9,10 @@ import { normalizeAddress } from '@/lib/wallet';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { txHash: string } }
+  { params }: { params: Promise<{ txHash: string }> }
 ) {
   try {
-    const txHash = params.txHash;
+    const { txHash } = await params;
     const searchParams = request.nextUrl.searchParams;
     const recipientAddress = searchParams.get('recipient');
     const expectedAmount = searchParams.get('amount');
