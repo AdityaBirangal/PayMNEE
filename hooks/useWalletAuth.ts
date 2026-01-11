@@ -1,7 +1,7 @@
 'use client';
 
 import { useActiveAccount } from 'thirdweb/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { normalizeAddress } from '@/lib/wallet';
 
 interface User {
@@ -21,71 +21,55 @@ export function useWalletAuth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Register/authenticate user when wallet is connected
-  useEffect(() => {
-    const authenticateUser = async () => {
-      if (!account?.address) {
-        setUser(null);
-        return;
-      }
-
-      setLoading(true);
-      setError(null);
-
-      try {
-        const normalizedAddress = normalizeAddress(account.address);
-        
-        const response = await fetch('/api/auth/wallet', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            walletAddress: normalizedAddress,
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to authenticate wallet');
-        }
-
-        const data = await response.json();
-        setUser(data.user);
-      } catch (err) {
-        console.error('Wallet authentication error:', err);
-        setError(err instanceof Error ? err.message : 'Authentication failed');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    authenticateUser();
-  }, [account?.address]);
-
-  // Fetch user data (with payment pages)
-  const fetchUser = async () => {
-    if (!account?.address) return;
+  // Fetch user data (with payment pages) - memoized to prevent infinite loops
+  const fetchUser = useCallback(async () => {
+    if (!account?.address) {
+      setUser(null);
+      return;
+    }
 
     setLoading(true);
     setError(null);
 
     try {
       const normalizedAddress = normalizeAddress(account.address);
-      const response = await fetch(`/api/auth/wallet?address=${normalizedAddress}`);
+      
+      // First, ensure user exists (POST)
+      const authResponse = await fetch('/api/auth/wallet', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          walletAddress: normalizedAddress,
+        }),
+      });
 
-      if (!response.ok) {
+      if (!authResponse.ok) {
+        throw new Error('Failed to authenticate wallet');
+      }
+
+      // Then fetch full user data with payment pages (GET)
+      const userResponse = await fetch(`/api/auth/wallet?address=${normalizedAddress}`);
+
+      if (!userResponse.ok) {
         throw new Error('Failed to fetch user data');
       }
 
-      const data = await response.json();
-      setUser(data.user);
+      const userData = await userResponse.json();
+      setUser(userData.user);
     } catch (err) {
       console.error('Error fetching user:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch user');
     } finally {
       setLoading(false);
     }
-  };
+  }, [account?.address]);
+
+  // Register/authenticate user when wallet is connected
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
   return {
     user,
