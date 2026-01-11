@@ -193,13 +193,15 @@ export async function scanTransfersToAddress(
     // Query events
     const events = await contract.queryFilter(filter, fromBlock, toBlock);
 
-    return events.map((event) => ({
-      txHash: event.transactionHash,
-      from: normalizeAddress(event.args[0] as string),
-      to: normalizedRecipient,
-      amount: event.args[2].toString(),
-      blockNumber: event.blockNumber,
-    }));
+    return events
+      .filter((event): event is ethers.EventLog => 'args' in event)
+      .map((event) => ({
+        txHash: event.transactionHash,
+        from: normalizeAddress(event.args[0] as string),
+        to: normalizedRecipient,
+        amount: event.args[2].toString(),
+        blockNumber: event.blockNumber,
+      }));
   } catch (error) {
     console.error('Error scanning transfers:', error);
     return [];

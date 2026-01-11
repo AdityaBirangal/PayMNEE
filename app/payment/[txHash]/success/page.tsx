@@ -54,7 +54,7 @@ export default function PaymentSuccessPage() {
 
         // If wallet is connected, check access to content
         if (account?.address) {
-          const itemId = paymentData.payment.item?.id || paymentData.payment.itemId;
+          const itemId = paymentData.payment.item?.id;
           if (itemId) {
             try {
               const accessResponse = await fetch(
@@ -239,7 +239,7 @@ export default function PaymentSuccessPage() {
                     <ConnectWallet />
                   </div>
                   <p className="text-sm text-blue-700 dark:text-blue-300">
-                    Or visit: <Link href={`/content/${data.payment.item?.id || data.payment.itemId}`} className="font-semibold hover:underline">Content Page</Link>
+                    Or visit: <Link href={`/content/${data.payment.item?.id}`} className="font-semibold hover:underline">Content Page</Link>
                   </p>
                 </div>
               ) : accessChecked ? (
@@ -269,7 +269,7 @@ export default function PaymentSuccessPage() {
                       </a>
                       <div>
                         <Link
-                          href={`/content/${data.payment.item?.id || data.payment.itemId}`}
+                          href={`/content/${data.payment.item?.id}`}
                           className="text-sm text-green-700 dark:text-green-300 hover:underline font-medium"
                         >
                           Or view content page →
@@ -289,7 +289,7 @@ export default function PaymentSuccessPage() {
                       The payment may still be confirming on the blockchain. Please try again in a moment.
                     </p>
                     <Link
-                      href={`/content/${data.payment.item?.id || data.payment.itemId}`}
+                      href={`/content/${data.payment.item?.id}`}
                       className="inline-flex items-center gap-2 text-sm text-yellow-700 dark:text-yellow-300 hover:underline font-semibold"
                     >
                       Try content page
