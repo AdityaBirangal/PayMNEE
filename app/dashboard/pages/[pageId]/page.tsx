@@ -38,10 +38,16 @@ export default function PaymentPageDetail() {
 
   useEffect(() => {
     const fetchPage = async () => {
-      if (!walletAddress || !pageId) return;
+      if (!walletAddress || !pageId) {
+        if (!walletAddress) {
+          setError('Wallet not connected');
+        }
+        setLoading(false);
+        return;
+      }
 
       try {
-        const response = await fetch(`/api/pages/${pageId}?wallet=${walletAddress}`);
+        const response = await fetch(`/api/pages/${pageId}?address=${encodeURIComponent(walletAddress)}`);
         const data = await response.json();
 
         if (!response.ok) {
@@ -60,12 +66,17 @@ export default function PaymentPageDetail() {
   }, [walletAddress, pageId]);
 
   const handleDeleteItem = async (itemId: string) => {
+    if (!walletAddress) {
+      alert('Wallet not connected');
+      return;
+    }
+
     if (!confirm('Are you sure you want to delete this payment item?')) {
       return;
     }
 
     try {
-      const response = await fetch(`/api/items/${itemId}?wallet=${walletAddress}`, {
+      const response = await fetch(`/api/items/${itemId}?address=${encodeURIComponent(walletAddress)}`, {
         method: 'DELETE',
       });
 
@@ -74,7 +85,7 @@ export default function PaymentPageDetail() {
       }
 
       // Refresh page data
-      const pageResponse = await fetch(`/api/pages/${pageId}?wallet=${walletAddress}`);
+      const pageResponse = await fetch(`/api/pages/${pageId}?address=${encodeURIComponent(walletAddress)}`);
       const pageData = await pageResponse.json();
       if (pageData.success) {
         setPage(pageData.page);
@@ -90,7 +101,15 @@ export default function PaymentPageDetail() {
         <div className="min-h-screen">
           <Header />
           <main className="container mx-auto px-4 py-8">
-            <div className="text-center">Loading...</div>
+            <div className="text-center">
+              {!walletAddress ? (
+                <div>
+                  <p className="text-gray-600 dark:text-gray-400">Connecting wallet...</p>
+                </div>
+              ) : (
+                <p className="text-gray-600 dark:text-gray-400">Loading payment page...</p>
+              )}
+            </div>
           </main>
         </div>
       </ProtectedRoute>
@@ -103,7 +122,23 @@ export default function PaymentPageDetail() {
         <div className="min-h-screen">
           <Header />
           <main className="container mx-auto px-4 py-8">
-            <div className="text-center text-red-600">{error || 'Page not found'}</div>
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-red-800 dark:text-red-200 mb-2">Error</h2>
+                <p className="text-red-700 dark:text-red-300">{error || 'Page not found'}</p>
+                {!walletAddress && (
+                  <p className="text-sm text-red-600 dark:text-red-400 mt-2">
+                    Please make sure your wallet is connected.
+                  </p>
+                )}
+                <Link
+                  href="/dashboard"
+                  className="mt-4 inline-block text-blue-600 hover:text-blue-700"
+                >
+                  ← Back to Dashboard
+                </Link>
+              </div>
+            </div>
           </main>
         </div>
       </ProtectedRoute>
