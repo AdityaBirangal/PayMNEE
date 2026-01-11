@@ -1,11 +1,13 @@
 'use client';
 
-import { ConnectButton } from 'thirdweb/react';
+import { useState, useEffect, useMemo } from 'react';
+import { ConnectButton, useActiveAccount, useActiveWalletChain } from 'thirdweb/react';
 import { createThirdwebClient } from 'thirdweb';
 import { createWallet, inAppWallet } from 'thirdweb/wallets';
 import { defineChain } from 'thirdweb/chains';
-import { CHAIN_ID } from '@/lib/constants';
-import { useMemo } from 'react';
+import { CHAIN_ID, TOKEN_SYMBOL } from '@/lib/constants';
+import { getTokenContract, formatTokenAmount } from '@/lib/blockchain';
+import { shortenAddress } from '@/lib/wallet';
 
 const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
 
@@ -36,6 +38,11 @@ const getSepoliaChain = () => {
 };
 
 export default function ConnectWallet() {
+  const account = useActiveAccount();
+  const chain = useActiveWalletChain();
+  const [usdaBalance, setUsdaBalance] = useState<string | null>(null);
+  const [loadingBalance, setLoadingBalance] = useState(false);
+
   const client = useMemo(() => {
     if (!clientId) {
       return null;
@@ -52,6 +59,34 @@ export default function ConnectWallet() {
       return null;
     }
   }, []);
+
+  // Fetch USDA balance when account is connected
+  useEffect(() => {
+    const fetchBalance = async () => {
+      if (!account?.address) {
+        setUsdaBalance(null);
+        return;
+      }
+
+      try {
+        setLoadingBalance(true);
+        const contract = getTokenContract();
+        const balance = await contract.balanceOf(account.address);
+        const formatted = formatTokenAmount(balance, 18);
+        setUsdaBalance(formatted);
+      } catch (error) {
+        console.error('Error fetching USDA balance:', error);
+        setUsdaBalance(null);
+      } finally {
+        setLoadingBalance(false);
+      }
+    };
+
+    fetchBalance();
+    // Refresh balance every 10 seconds
+    const interval = setInterval(fetchBalance, 10000);
+    return () => clearInterval(interval);
+  }, [account?.address]);
 
   if (!client) {
     return (
@@ -70,11 +105,32 @@ export default function ConnectWallet() {
   }
 
   return (
-    <ConnectButton
-      client={client}
-      wallets={wallets}
-      chain={sepoliaChain}
-      connectModal={{ size: 'wide' }}
-    />
+    <div className={`connect-wallet-container ${!account ? 'connect-wallet-not-connected' : 'connect-wallet-connected'}`}>
+      <div className="connect-wallet-button-wrapper">
+        <ConnectButton
+          client={client}
+          wallets={wallets}
+          chain={sepoliaChain}
+          connectModal={{ size: 'wide' }}
+        />
+        {account && (
+          <div className="connect-wallet-custom-content">
+            <div className="connect-wallet-icon">
+              <div className="connect-wallet-icon-circle"></div>
+            </div>
+            <div className="connect-wallet-info">
+              <div className="connect-wallet-address">
+                {shortenAddress(account.address)}
+              </div>
+              {usdaBalance !== null && (
+                <div className="connect-wallet-usda-balance">
+                  {parseFloat(usdaBalance).toFixed(2)} {TOKEN_SYMBOL}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
