@@ -1,19 +1,42 @@
 # PayMNEE
 
-The easiest way to accept MNEE stablecoin payments.
+<div align="center">
+  <img src="public/MNEE_Logo.png" alt="MNEE Logo" width="120" height="120" />
+  
+  <h3>The easiest way to accept MNEE stablecoin payments</h3>
+  
+  <p>
+    <a href="https://paymnee.birangal.com/">🌐 Live Demo</a> •
+    <a href="https://github.com/AdityaBirangal/PayMNEE">📦 GitHub</a> •
+  </p>
+</div>
+
+## About
+
+PayMNEE is a non-custodial payment platform that enables creators, sellers, and business owners to accept payments using MNEE stablecoin.
+
+### Key Features
+
+- 🚀 **Instant Settlements** - Receive payments instantly on Ethereum blockchain
+- 💰 **Zero Platform Fees** - Keep 100% of what customers pay
+- 🔒 **Non-Custodial** - Payments go directly from customer to creator
+- 🔓 **Automatic Content Unlocking** - Blockchain-verified access control
+- 📊 **Easy Analytics** - Track all payments and earnings in one dashboard
+- 🌍 **24/7 Available** - Your payment page is always online
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14 (App Router), Tailwind CSS, thirdweb WalletConnect
-- **Backend**: Next.js API routes, Prisma ORM, SQLite (local) / PostgreSQL (production)
+- **Frontend**: Next.js 16 (App Router), React 18, Tailwind CSS, thirdweb WalletConnect
+- **Backend**: Next.js API routes, Prisma ORM, PostgreSQL (Supabase)
 - **Blockchain**: Ethereum Sepolia (testnet), USDA test token (MNEE in production), ethers.js
+- **Database**: PostgreSQL (Supabase)
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18+ 
-- SQLite (for local development) or PostgreSQL (for production)
+- PostgreSQL database (Supabase recommended)
 - Ethereum RPC endpoint (Alchemy, Infura, etc.)
 - ThirdWeb account (for wallet connection)
 
@@ -36,12 +59,14 @@ cp .env.example .env
 # Generate Prisma Client
 npm run db:generate
 
-# Create database and run migrations (SQLite will be created automatically)
-npm run db:migrate
-
-# Or use db:push for development (faster, no migration files)
+# Push schema to PostgreSQL database (creates tables)
 npm run db:push
+
+# Or create a migration
+npm run db:migrate
 ```
+
+**Note**: Make sure your `DATABASE_URL` in `.env` points to your PostgreSQL database (Supabase connection string).
 
 4. Run the development server:
 ```bash
@@ -50,14 +75,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-## Security Notes
-
-⚠️ **IMPORTANT**: 
-- Never commit your `.env` file to git - it contains sensitive API keys
-- The `.env` file is already in `.gitignore` and will not be tracked
-- Always use `.env.example` as a template with placeholder values
-- Replace all placeholder values in `.env` with your actual API keys and secrets
-- Rotate your API keys immediately if they are ever exposed
 
 ## Database Schema
 
@@ -73,5 +90,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser.
 /components       # React components
 /prisma           # Prisma schema and migrations
 /lib              # Utility functions and configurations
-/public           # Static assets
+/public           # Static assets (MNEE logo, etc.)
 ```
+
+## Links
+
+- 🌐 **Live Demo**: [https://paymnee.birangal.com/](https://paymnee.birangal.com/)
+- 📦 **GitHub Repository**: [https://github.com/AdityaBirangal/PayMNEE](https://github.com/AdityaBirangal/PayMNEE)
+
+### Track: Commerce & Creator Infrastructure
+
+PayMNEE enables:
+- ✅ Creators to accept stablecoin payments without KYC barriers
+- ✅ Instant, low-cost global payments using MNEE stablecoin
+- ✅ Automated content access with blockchain verification
+- ✅ Non-custodial architecture - users control their funds
+- ✅ Production-ready with comprehensive analytics
+
+## Contact
+
+- 💼 **LinkedIn**: [linkedin.com/in/AdityaBirangal](https://linkedin.com/in/AdityaBirangal)
