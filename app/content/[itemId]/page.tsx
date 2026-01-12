@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import { useActiveAccount } from 'thirdweb/react';
 import Link from 'next/link';
+import { ETHERSCAN_URL } from '@/lib/constants';
 
 interface AccessData {
   hasAccess: boolean;
@@ -187,7 +188,7 @@ export default function ContentAccessPage() {
                       {accessData.payment.txHash}
                     </p>
                     <a
-                      href={`https://sepolia.etherscan.io/tx/${accessData.payment.txHash}`}
+                      href={`${ETHERSCAN_URL}/tx/${accessData.payment.txHash}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-shrink-0 text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors"

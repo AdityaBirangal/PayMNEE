@@ -38,7 +38,7 @@ export function usePayment() {
 
     // Check if chain is correct
     if (!chain || chain.id !== CHAIN_ID) {
-      const err = new Error(`Please switch to Sepolia testnet (Chain ID: ${CHAIN_ID})`);
+      const err = new Error(`Please switch to Ethereum Mainnet (Chain ID: ${CHAIN_ID})`);
       setError(err.message);
       onError?.(err);
       return null;

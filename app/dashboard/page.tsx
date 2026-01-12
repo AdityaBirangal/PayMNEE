@@ -8,6 +8,7 @@ import { useActiveAccount } from 'thirdweb/react';
 import Link from 'next/link';
 import { formatTokenAmount } from '@/lib/blockchain';
 import { shortenAddress } from '@/lib/wallet';
+import { ETHERSCAN_URL } from '@/lib/constants';
 import Skeleton from '@/components/ui/Skeleton';
 
 interface Analytics {
@@ -386,7 +387,7 @@ export default function DashboardPage() {
                                               <div className="flex items-start justify-between gap-3">
                                                 <div className="flex-1 min-w-0">
                                                   <a
-                                                    href={`https://sepolia.etherscan.io/tx/${payment.txHash}`}
+                                                    href={`${ETHERSCAN_URL}/tx/${payment.txHash}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="font-mono text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors break-all"

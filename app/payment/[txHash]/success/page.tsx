@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useActiveAccount } from 'thirdweb/react';
 import { formatTokenAmount } from '@/lib/blockchain';
 import ConnectWallet from '@/components/wallet/ConnectWallet';
+import { ETHERSCAN_URL } from '@/lib/constants';
 
 interface PaymentData {
   payment: {
@@ -193,7 +194,7 @@ export default function PaymentSuccessPage() {
                 <div className="flex items-center gap-2">
                   <p className="font-mono text-sm break-all text-gray-900 dark:text-gray-100">{data.payment.txHash}</p>
                   <a
-                    href={`https://sepolia.etherscan.io/tx/${data.payment.txHash}`}
+                    href={`${ETHERSCAN_URL}/tx/${data.payment.txHash}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-shrink-0 text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors"

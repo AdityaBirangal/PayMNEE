@@ -9,7 +9,7 @@ import ConnectWallet from '@/components/wallet/ConnectWallet';
 import { useActiveAccount } from 'thirdweb/react';
 import { shortenAddress } from '@/lib/wallet';
 import { usePayment } from '@/hooks/usePayment';
-import { CHAIN_ID } from '@/lib/constants';
+import { CHAIN_ID, ETHERSCAN_URL } from '@/lib/constants';
 import { useToast } from '@/components/ui/ToastProvider';
 import Skeleton from '@/components/ui/Skeleton';
 
@@ -98,7 +98,7 @@ export default function PublicPaymentPage() {
     }
 
     if (!isCorrectChain) {
-      showToast(`Please switch to Sepolia testnet (Chain ID: ${CHAIN_ID})`, 'error');
+      showToast(`Please switch to Ethereum Mainnet (Chain ID: ${CHAIN_ID})`, 'error');
       return;
     }
 
@@ -227,17 +227,17 @@ export default function PublicPaymentPage() {
 
                   {/* Payment Items */}
                   <div className="p-6">
-                    {page.items.length > 0 ? (
+                  {page.items.length > 0 ? (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {page.items.map((item) => (
-                          <div
-                            key={item.id}
+                      {page.items.map((item) => (
+                        <div
+                          key={item.id}
                             className="group border-2 border-gray-200 dark:border-gray-700 rounded-xl p-5 hover:border-amber-400 dark:hover:border-amber-600 hover:shadow-lg transition-all duration-200 bg-gradient-to-br from-white to-gray-50/30 dark:from-gray-800 dark:to-gray-800/50 cursor-pointer"
                             onClick={() => handlePayClick(item)}
-                          >
+                        >
                             <div className="flex items-start justify-between mb-3">
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-2">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
                                   <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">{item.title}</h3>
                                   <span className={`px-2.5 py-1 text-xs font-semibold rounded-full ${
                                     item.type === 'fixed' 
@@ -245,13 +245,13 @@ export default function PublicPaymentPage() {
                                       : 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300'
                                   }`}>
                                     {item.type === 'fixed' ? 'Fixed' : 'Custom'}
-                                  </span>
-                                </div>
-                                {item.description && (
+                                </span>
+                              </div>
+                              {item.description && (
                                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-                                    {item.description}
-                                  </p>
-                                )}
+                                  {item.description}
+                                </p>
+                              )}
                               </div>
                               {item.contentUrl && (
                                 <div className="flex-shrink-0 ml-2">
@@ -278,24 +278,24 @@ export default function PublicPaymentPage() {
                                   <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">Custom</p>
                                 </div>
                               )}
-                              <button
+                            <button
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   handlePayClick(item);
                                 }}
                                 className="px-5 py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 text-white rounded-lg hover:from-amber-700 hover:to-amber-600 transition-all duration-200 font-semibold shadow-md hover:shadow-lg flex items-center gap-2"
-                                aria-label={`Pay for ${item.title}`}
-                              >
+                              aria-label={`Pay for ${item.title}`}
+                            >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 Pay Now
-                              </button>
-                            </div>
+                            </button>
                           </div>
-                        ))}
-                      </div>
-                    ) : (
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
                       <div className="text-center py-8">
                         <p className="text-gray-500 dark:text-gray-400">No payment items available</p>
                       </div>
@@ -355,11 +355,11 @@ export default function PublicPaymentPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-gray-900 dark:text-gray-100 mb-1">{selectedItem.title}</p>
-                      {selectedItem.description && (
+                  {selectedItem.description && (
                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {selectedItem.description}
-                        </p>
-                      )}
+                      {selectedItem.description}
+                    </p>
+                  )}
                     </div>
                   </div>
                 </div>
@@ -388,15 +388,15 @@ export default function PublicPaymentPage() {
                           Payment Amount (USDA) *
                         </label>
                         <div className="relative">
-                          <input
-                            type="number"
-                            step="0.000001"
-                            min="0"
-                            value={customAmount}
-                            onChange={(e) => setCustomAmount(e.target.value)}
+                        <input
+                          type="number"
+                          step="0.000001"
+                          min="0"
+                          value={customAmount}
+                          onChange={(e) => setCustomAmount(e.target.value)}
                             className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 dark:bg-gray-700 dark:text-gray-100 text-lg font-semibold"
                             placeholder="0.00"
-                          />
+                        />
                           <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">
                             USDA
                           </div>
@@ -435,7 +435,7 @@ export default function PublicPaymentPage() {
                         </div>
                         {txHash && (
                           <a
-                            href={`https://sepolia.etherscan.io/tx/${txHash}`}
+                            href={`${ETHERSCAN_URL}/tx/${txHash}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-xs text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-mono break-all block"
@@ -455,8 +455,8 @@ export default function PublicPaymentPage() {
                           <div className="flex-1">
                             <p className="text-red-900 dark:text-red-100 font-bold">Payment Failed</p>
                             <p className="text-sm text-red-700 dark:text-red-300 mt-1">
-                              {paymentError || 'An error occurred. Please try again.'}
-                            </p>
+                          {paymentError || 'An error occurred. Please try again.'}
+                        </p>
                           </div>
                         </div>
                       </div>
@@ -469,7 +469,7 @@ export default function PublicPaymentPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                           </svg>
                           <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-                            Please switch to Sepolia testnet to make payments
+                            Please switch to Ethereum Mainnet to make payments
                           </p>
                         </div>
                       </div>

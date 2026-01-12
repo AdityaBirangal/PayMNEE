@@ -18,8 +18,8 @@ const wallets = [
   createWallet('me.rainbow'),
 ];
 
-// Define Sepolia chain
-const getSepoliaChain = () => {
+// Define Ethereum Mainnet chain
+const getEthereumChain = () => {
   const rpcUrl = process.env.NEXT_PUBLIC_ETHEREUM_RPC_URL;
   if (!rpcUrl) {
     throw new Error('NEXT_PUBLIC_ETHEREUM_RPC_URL is not set in environment variables');
@@ -27,7 +27,7 @@ const getSepoliaChain = () => {
   
   return defineChain({
     id: CHAIN_ID,
-    name: 'Sepolia',
+    name: 'Ethereum',
     rpc: rpcUrl,
     nativeCurrency: {
       name: 'Ether',
@@ -52,9 +52,9 @@ export default function ConnectWallet() {
     });
   }, [clientId]);
 
-  const sepoliaChain = useMemo(() => {
+  const ethereumChain = useMemo(() => {
     try {
-      return getSepoliaChain();
+      return getEthereumChain();
     } catch (error) {
       return null;
     }
@@ -96,7 +96,7 @@ export default function ConnectWallet() {
     );
   }
 
-  if (!sepoliaChain) {
+  if (!ethereumChain) {
     return (
       <div className="px-4 py-2 text-sm text-red-600">
         Ethereum RPC URL not configured
@@ -110,7 +110,7 @@ export default function ConnectWallet() {
         <ConnectButton
           client={client}
           wallets={wallets}
-          chain={sepoliaChain}
+          chain={ethereumChain}
           connectModal={{ size: 'wide' }}
         />
         {account && (

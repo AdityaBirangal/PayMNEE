@@ -6,6 +6,7 @@ import ConnectWallet from '@/components/wallet/ConnectWallet';
 import { useActiveAccount } from 'thirdweb/react';
 import { formatTokenAmount } from '@/lib/blockchain';
 import { shortenAddress } from '@/lib/wallet';
+import { ETHERSCAN_URL } from '@/lib/constants';
 import Link from 'next/link';
 
 interface Purchase {
@@ -268,7 +269,7 @@ export default function PurchasesPage() {
                             </svg>
                             <span className="text-gray-500 dark:text-gray-400 text-xs">Transaction:</span>
                             <a
-                              href={`https://sepolia.etherscan.io/tx/${purchase.txHash}`}
+                              href={`${ETHERSCAN_URL}/tx/${purchase.txHash}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="font-mono text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 break-all"

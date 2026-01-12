@@ -28,7 +28,7 @@ PayMNEE is a non-custodial payment platform that enables creators, sellers, and 
 
 - **Frontend**: Next.js 16 (App Router), React 18, Tailwind CSS, thirdweb WalletConnect
 - **Backend**: Next.js API routes, Prisma ORM, PostgreSQL (Supabase)
-- **Blockchain**: Ethereum Sepolia (testnet), USDA test token (MNEE in production), ethers.js
+- **Blockchain**: Ethereum Mainnet, MNEE stablecoin, ethers.js
 - **Database**: PostgreSQL (Supabase)
 
 ## Getting Started
