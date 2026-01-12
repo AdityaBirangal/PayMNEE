@@ -269,7 +269,7 @@ export default function PublicPaymentPage() {
                                 <div>
                                   <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Price</p>
                                   <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
-                                    {item.priceMnee} <span className="text-base text-gray-600 dark:text-gray-400">USDA</span>
+                                    {item.priceMnee} <span className="text-base text-gray-600 dark:text-gray-400">MNEE</span>
                                   </p>
                                 </div>
                               ) : (
@@ -385,7 +385,7 @@ export default function PublicPaymentPage() {
                     {selectedItem.type === 'open' ? (
                       <div className="mb-6">
                         <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                          Payment Amount (USDA) *
+                          Payment Amount (MNEE) *
                         </label>
                         <div className="relative">
                         <input
@@ -398,7 +398,7 @@ export default function PublicPaymentPage() {
                             placeholder="0.00"
                         />
                           <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">
-                            USDA
+                            MNEE
                           </div>
                         </div>
                       </div>
@@ -406,7 +406,7 @@ export default function PublicPaymentPage() {
                       <div className="mb-6 p-5 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-800">
                         <p className="text-xs font-medium text-green-700 dark:text-green-300 mb-2">Amount to Pay</p>
                         <p className="text-3xl font-bold text-green-900 dark:text-green-100">
-                          {selectedItem.priceMnee} <span className="text-xl text-green-700 dark:text-green-300">USDA</span>
+                          {selectedItem.priceMnee} <span className="text-xl text-green-700 dark:text-green-300">MNEE</span>
                         </p>
                       </div>
                     )}
@@ -495,7 +495,7 @@ export default function PublicPaymentPage() {
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Pay {selectedItem.type === 'open' ? (customAmount || '0') : selectedItem.priceMnee} USDA
+                            Pay {selectedItem.type === 'open' ? (customAmount || '0') : selectedItem.priceMnee} MNEE
                           </>
                         )}
                       </button>

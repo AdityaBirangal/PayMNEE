@@ -238,7 +238,7 @@ export default function PaymentPageDetail() {
                             </span>
                             {item.type === 'fixed' && item.priceMnee && (
                               <span className="text-sm font-bold text-amber-600 dark:text-amber-400">
-                                {item.priceMnee} USDA
+                                {item.priceMnee} MNEE
                               </span>
                             )}
                           </div>

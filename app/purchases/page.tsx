@@ -178,7 +178,7 @@ export default function PurchasesPage() {
                       } catch {
                         return sum;
                       }
-                    }, 0).toFixed(2)} <span className="text-base text-green-700 dark:text-green-300">USDA</span>
+                    }, 0).toFixed(2)} <span className="text-base text-green-700 dark:text-green-300">MNEE</span>
                   </p>
                 </div>
               </div>
@@ -248,7 +248,7 @@ export default function PurchasesPage() {
                             </svg>
                             <span className="text-gray-500 dark:text-gray-400">Amount:</span>
                             <span className="font-bold text-green-600 dark:text-green-400">
-                              {formatTokenAmount(BigInt(purchase.amount), 18)} USDA
+                              {formatTokenAmount(BigInt(purchase.amount), 18)} MNEE
                             </span>
                           </div>
                           <div className="flex items-center gap-2">

@@ -209,7 +209,7 @@ export default function PaymentSuccessPage() {
               <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-green-200 dark:border-green-800">
                 <span className="text-xs font-semibold text-green-700 dark:text-green-300 uppercase tracking-wider">Amount</span>
                 <p className="text-2xl font-bold text-green-900 dark:text-green-100 mt-1">
-                  {formatTokenAmount(BigInt(data.payment.amount), 18)} <span className="text-base text-green-700 dark:text-green-300">USDA</span>
+                  {formatTokenAmount(BigInt(data.payment.amount), 18)} <span className="text-base text-green-700 dark:text-green-300">MNEE</span>
                 </p>
               </div>
               <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">

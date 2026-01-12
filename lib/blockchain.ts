@@ -9,7 +9,7 @@ export const ERC20_ABI = [
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 ] as const;
 
-// Get the MNEE/USDA token address from environment
+// Get the MNEE/MNEE token address from environment
 export const getTokenAddress = (): string => {
   const address = process.env.NEXT_PUBLIC_MNEE_TOKEN_ADDRESS;
   if (!address) {

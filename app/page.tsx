@@ -65,7 +65,7 @@ export default function HomePage() {
               The world&apos;s fastest USD-backed stablecoin
             </p>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-              Accept payments instantly with zero platform fees. <br /> Built on Ethereum (ERC-20). No KYC required.
+              Built on Ethereum (ERC-20). No KYC required.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-10">
               <div className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-full shadow-sm">

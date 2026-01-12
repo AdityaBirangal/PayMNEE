@@ -60,7 +60,7 @@ export default function ConnectWallet() {
     }
   }, []);
 
-  // Fetch USDA balance when account is connected
+  // Fetch MNEE balance when account is connected
   useEffect(() => {
     const fetchBalance = async () => {
       if (!account?.address) {
@@ -75,7 +75,7 @@ export default function ConnectWallet() {
         const formatted = formatTokenAmount(balance, 18);
         setUsdaBalance(formatted);
       } catch (error) {
-        console.error('Error fetching USDA balance:', error);
+        console.error('Error fetching MNEE balance:', error);
         setUsdaBalance(null);
       } finally {
         setLoadingBalance(false);

@@ -10,6 +10,7 @@ import { formatTokenAmount } from '@/lib/blockchain';
 import { shortenAddress } from '@/lib/wallet';
 import { ETHERSCAN_URL } from '@/lib/constants';
 import Skeleton from '@/components/ui/Skeleton';
+import { useToast } from '@/components/ui/ToastProvider';
 
 interface Analytics {
   success: boolean;
@@ -58,6 +59,7 @@ interface Analytics {
 export default function DashboardPage() {
   const { user, loading } = useWallet();
   const account = useActiveAccount();
+  const { showToast } = useToast();
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
   const [analyticsError, setAnalyticsError] = useState<string | null>(null);
@@ -132,110 +134,167 @@ export default function DashboardPage() {
               </div>
             ) : (
               <div className="space-y-6">
-
-                {/* Payment Analytics */}
-                {analyticsLoading ? (
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-4">
-                    <Skeleton className="h-6 w-48" />
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                      <Skeleton className="h-20" />
-                      <Skeleton className="h-20" />
-                      <Skeleton className="h-20" />
-                      <Skeleton className="h-20" />
+                {/* Summary Stats - Always show, with loading states */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {/* Total Collected */}
+                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                ) : analyticsError ? (
-                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6">
-                    <p className="text-red-800 dark:text-red-200 font-semibold">Error</p>
-                    <p className="text-red-600 dark:text-red-400">{analyticsError}</p>
-                  </div>
-                ) : analytics ? (
-                  <>
-                    {/* Summary Stats */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {/* Total Collected */}
-                      <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                            <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          </div>
-                        </div>
-                        <p className="text-sm font-medium text-green-700 dark:text-green-300 mb-1">Total Collected</p>
+                    <p className="text-sm font-medium text-green-700 dark:text-green-300 mb-1">Total Collected</p>
+                    {analyticsLoading ? (
+                  <div className="space-y-2">
+                        <Skeleton className="h-8 w-24 bg-green-200/50 dark:bg-green-800/30" />
+                        <Skeleton className="h-4 w-12 bg-green-200/50 dark:bg-green-800/30" />
+                      </div>
+                    ) : analyticsError ? (
+                      <div className="space-y-1">
+                        <p className="text-lg font-bold text-red-600 dark:text-red-400">Error</p>
+                        <p className="text-xs text-red-500 dark:text-red-500">Failed to load</p>
+                      </div>
+                    ) : analytics ? (
+                      <>
                         <p className="text-2xl font-bold text-green-900 dark:text-green-100">
                           {formatTokenAmount(BigInt(analytics.summary.totalAmount), 18)}
                         </p>
-                        <p className="text-xs text-green-600 dark:text-green-400 mt-1">USDA</p>
+                        <p className="text-xs text-green-600 dark:text-green-400 mt-1">MNEE</p>
+                      </>
+                    ) : (
+                      <div className="space-y-2">
+                        <Skeleton className="h-8 w-24 bg-green-200/50 dark:bg-green-800/30" />
+                        <Skeleton className="h-4 w-12 bg-green-200/50 dark:bg-green-800/30" />
                       </div>
+                    )}
+                  </div>
 
-                      {/* Total Payments */}
-                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                            <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                          </div>
-                        </div>
-                        <p className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">Total Payments</p>
+                  {/* Total Payments */}
+                  <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </div>
+                    </div>
+                    <p className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">Total Payments</p>
+                    {analyticsLoading ? (
+                      <div className="space-y-2">
+                        <Skeleton className="h-8 w-16 bg-blue-200/50 dark:bg-blue-800/30" />
+                        <Skeleton className="h-4 w-20 bg-blue-200/50 dark:bg-blue-800/30" />
+                      </div>
+                    ) : analyticsError ? (
+                      <div className="space-y-1">
+                        <p className="text-lg font-bold text-red-600 dark:text-red-400">Error</p>
+                        <p className="text-xs text-red-500 dark:text-red-500">Failed to load</p>
+                      </div>
+                    ) : analytics ? (
+                      <>
                         <p className="text-2xl font-bold text-blue-900 dark:text-blue-100">
                           {analytics.summary.totalPayments}
                         </p>
                         <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">Transactions</p>
+                      </>
+                    ) : (
+                      <div className="space-y-2">
+                        <Skeleton className="h-8 w-16 bg-blue-200/50 dark:bg-blue-800/30" />
+                        <Skeleton className="h-4 w-20 bg-blue-200/50 dark:bg-blue-800/30" />
                       </div>
+                    )}
+                  </div>
 
-                      {/* Payment Pages */}
-                      <div className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="w-12 h-12 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
-                            <svg className="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                          </div>
-                        </div>
-                        <p className="text-sm font-medium text-amber-700 dark:text-amber-300 mb-1">Payment Pages</p>
+                  {/* Payment Pages */}
+                  <div className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="w-12 h-12 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </div>
+                    </div>
+                    <p className="text-sm font-medium text-amber-700 dark:text-amber-300 mb-1">Payment Pages</p>
+                    {analyticsLoading ? (
+                      <div className="space-y-2">
+                        <Skeleton className="h-8 w-12 bg-amber-200/50 dark:bg-amber-800/30" />
+                        <Skeleton className="h-4 w-20 bg-amber-200/50 dark:bg-amber-800/30" />
+                      </div>
+                    ) : analyticsError ? (
+                      <div className="space-y-1">
+                        <p className="text-lg font-bold text-red-600 dark:text-red-400">Error</p>
+                        <p className="text-xs text-red-500 dark:text-red-500">Failed to load</p>
+                      </div>
+                    ) : analytics ? (
+                      <>
                         <p className="text-2xl font-bold text-amber-900 dark:text-amber-100">
                           {analytics.summary.totalPages}
                         </p>
                         <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">Active pages</p>
+                      </>
+                    ) : (
+                      <div className="space-y-2">
+                        <Skeleton className="h-8 w-12 bg-amber-200/50 dark:bg-amber-800/30" />
+                        <Skeleton className="h-4 w-20 bg-amber-200/50 dark:bg-amber-800/30" />
                       </div>
+                    )}
+                </div>
 
-                      {/* Payment Items */}
-                      <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-                            <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                            </svg>
-                          </div>
-                        </div>
-                        <p className="text-sm font-medium text-purple-700 dark:text-purple-300 mb-1">Payment Items</p>
+                  {/* Payment Items */}
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                        </svg>
+                      </div>
+                    </div>
+                    <p className="text-sm font-medium text-purple-700 dark:text-purple-300 mb-1">Payment Items</p>
+                    {analyticsLoading ? (
+                      <div className="space-y-2">
+                        <Skeleton className="h-8 w-12 bg-purple-200/50 dark:bg-purple-800/30" />
+                        <Skeleton className="h-4 w-16 bg-purple-200/50 dark:bg-purple-800/30" />
+                  </div>
+                ) : analyticsError ? (
+                      <div className="space-y-1">
+                        <p className="text-lg font-bold text-red-600 dark:text-red-400">Error</p>
+                        <p className="text-xs text-red-500 dark:text-red-500">Failed to load</p>
+                  </div>
+                ) : analytics ? (
+                  <>
                         <p className="text-2xl font-bold text-purple-900 dark:text-purple-100">
                           {analytics.summary.totalItems}
                         </p>
                         <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">Total items</p>
-                      </div>
-                    </div>
+                      </>
+                    ) : (
+                      <div className="space-y-2">
+                        <Skeleton className="h-8 w-12 bg-purple-200/50 dark:bg-purple-800/30" />
+                        <Skeleton className="h-4 w-16 bg-purple-200/50 dark:bg-purple-800/30" />
+                        </div>
+                    )}
+                        </div>
+                        </div>
 
-                    {/* Payment Pages with Analytics */}
-                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                {/* Payment Pages with Analytics */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                         <div>
                           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Your Payment Pages</h2>
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Manage your payment pages and track performance</p>
                         </div>
-                        <Link
-                          href="/dashboard/pages/new"
+                    <Link
+                      href="/dashboard/pages/new"
                           className="px-5 py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 text-white rounded-lg hover:from-amber-700 hover:to-amber-600 transition-all duration-200 font-semibold shadow-md hover:shadow-lg whitespace-nowrap flex items-center gap-2"
-                          aria-label="Create a new payment page"
-                        >
+                      aria-label="Create a new payment page"
+                    >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                           </svg>
-                          Create New Page
-                        </Link>
-                      </div>
+                      Create New Page
+                    </Link>
+                  </div>
 
                   {user?.paymentPages && user.paymentPages.length > 0 ? (
                     <div className="space-y-3">
@@ -255,17 +314,17 @@ export default function DashboardPage() {
                                     </svg>
                                   </div>
                                   <div className="flex-1 min-w-0">
-                                    <Link
-                                      href={`/dashboard/pages/${page.id}`}
+                                  <Link
+                                    href={`/dashboard/pages/${page.id}`}
                                       className="font-bold text-lg text-gray-900 dark:text-gray-100 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block truncate"
-                                    >
-                                      {page.title}
-                                    </Link>
-                                    {page.description && (
+                                  >
+                                    {page.title}
+                                  </Link>
+                                {page.description && (
                                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
-                                        {page.description}
-                                      </p>
-                                    )}
+                                    {page.description}
+                                  </p>
+                                )}
                                   </div>
                                 </div>
                                 <div className="flex flex-wrap items-center gap-3 mt-3 text-sm">
@@ -275,13 +334,18 @@ export default function DashboardPage() {
                                     </svg>
                                     <span>{new Date(page.createdAt).toLocaleDateString()}</span>
                                   </div>
-                                  {pageStats && (
+                                  {analyticsLoading ? (
+                                    <>
+                                      <Skeleton className="h-4 w-20 bg-gray-200/50 dark:bg-gray-700/30" />
+                                      <Skeleton className="h-4 w-16 bg-gray-200/50 dark:bg-gray-700/30" />
+                                    </>
+                                  ) : pageStats ? (
                                     <>
                                       <div className="flex items-center gap-1.5 text-green-600 dark:text-green-400 font-semibold">
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
-                                        <span>{formatTokenAmount(BigInt(pageStats.totalAmount), 18)} USDA</span>
+                                        <span>{formatTokenAmount(BigInt(pageStats.totalAmount), 18)} MNEE</span>
                                       </div>
                                       <div className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -290,7 +354,7 @@ export default function DashboardPage() {
                                         <span>{pageStats.totalPayments} payments</span>
                                       </div>
                                     </>
-                                  )}
+                                  ) : null}
                                 </div>
                               </div>
                               <div className="flex items-center gap-2 sm:ml-4 flex-shrink-0">
@@ -351,7 +415,7 @@ export default function DashboardPage() {
                                               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                               </svg>
-                                              {formatTokenAmount(BigInt(item.totalAmount), 18)} USDA
+                                              {formatTokenAmount(BigInt(item.totalAmount), 18)} MNEE
                                             </span>
                                             <span className="text-xs text-gray-600 dark:text-gray-400">
                                               {item.totalPayments} {item.totalPayments === 1 ? 'payment' : 'payments'}
@@ -403,7 +467,7 @@ export default function DashboardPage() {
                                                 </div>
                                                 <div className="text-right flex-shrink-0">
                                                   <p className="font-bold text-green-600 dark:text-green-400">
-                                                    {formatTokenAmount(BigInt(payment.amount), 18)} USDA
+                                                    {formatTokenAmount(BigInt(payment.amount), 18)} MNEE
                                                   </p>
                                                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                                                     {new Date(payment.createdAt).toLocaleDateString()}
@@ -445,9 +509,56 @@ export default function DashboardPage() {
                       </Link>
                     </div>
                   )}
+                </div>
+
+                {/* Public Payment Page URL */}
+                {user?.walletAddress && (
+                  <div className="bg-gradient-to-br from-amber-50 to-amber-100/50 dark:from-amber-900/20 dark:to-amber-800/20 rounded-xl shadow-sm border border-amber-200 dark:border-amber-800 p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-lg bg-amber-200 dark:bg-amber-900/40 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-amber-700 dark:text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Public Payment Page URL</h2>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">
+                          Share this link with your customers
+                        </p>
+                      </div>
                     </div>
-                  </>
-                ) : null}
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                      <code className="flex-1 px-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 rounded-lg text-sm font-mono text-gray-900 dark:text-gray-100 break-all">
+                        {typeof window !== 'undefined' && `${window.location.origin}/pay/${user.walletAddress}`}
+                      </code>
+                      <button
+                        onClick={() => {
+                          if (typeof window !== 'undefined') {
+                            navigator.clipboard.writeText(`${window.location.origin}/pay/${user.walletAddress}`);
+                            showToast('Link copied to clipboard!', 'success');
+                          }
+                        }}
+                        className="px-5 py-3 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-semibold flex items-center justify-center gap-2 whitespace-nowrap"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        Copy Link
+                      </button>
+                    </div>
+                    <a
+                      href={`/pay/${user.walletAddress}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-flex items-center gap-2 text-sm text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 font-medium"
+                    >
+                      <span>Preview public page</span>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </div>
+                )}
 
                 {/* Quick Actions */}
                 <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">

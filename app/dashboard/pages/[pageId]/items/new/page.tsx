@@ -158,7 +158,7 @@ export default function NewPaymentItem() {
               {formData.type === 'fixed' && (
                 <div>
                   <label htmlFor="priceMnee" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                    Price (USDA) *
+                    Price (MNEE) *
                   </label>
                   <div className="relative">
                     <input
@@ -173,7 +173,7 @@ export default function NewPaymentItem() {
                       placeholder="10.5"
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">
-                      USDA
+                      MNEE
                     </div>
                   </div>
                 </div>

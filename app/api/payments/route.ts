@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       // Compare as strings to handle precision
       if (expectedAmountWei !== providedAmount) {
         return NextResponse.json(
-          { error: `Amount mismatch. Expected ${item.priceMnee} USDA, but payment amount doesn't match` },
+          { error: `Amount mismatch. Expected ${item.priceMnee} MNEE, but payment amount doesn't match` },
           { status: 400 }
         );
       }

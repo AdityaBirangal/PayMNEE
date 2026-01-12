@@ -200,7 +200,7 @@ export default function EditPaymentItem() {
               {formData.type === 'fixed' && (
                 <div>
                   <label htmlFor="priceMnee" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                    Price (USDA) *
+                    Price (MNEE) *
                   </label>
                   <div className="relative">
                     <input
@@ -214,7 +214,7 @@ export default function EditPaymentItem() {
                       className="w-full px-4 py-3 pr-16 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 dark:bg-gray-700 dark:text-gray-100 transition-colors"
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">
-                      USDA
+                      MNEE
                     </div>
                   </div>
                 </div>
