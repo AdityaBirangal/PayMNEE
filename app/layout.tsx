@@ -3,6 +3,7 @@ import "./globals.css";
 import ThirdWebProvider from "@/components/providers/ThirdWebProvider";
 import { WalletProvider } from "@/components/wallet/WalletProvider";
 import { ToastProvider } from "@/components/ui/ToastProvider";
+import WalletDisconnectHandler from "@/components/auth/WalletDisconnectHandler";
 
 export const metadata: Metadata = {
   title: "PayMNEE - Accept MNEE Stablecoin Payments",
@@ -24,6 +25,7 @@ export default function RootLayout({
         <ThirdWebProvider>
           <WalletProvider>
             <ToastProvider>
+              <WalletDisconnectHandler />
               {children}
             </ToastProvider>
           </WalletProvider>

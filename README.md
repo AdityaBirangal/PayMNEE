@@ -7,7 +7,7 @@
   
   <p>
     <a href="https://paymnee.birangal.com/">🌐 Live Demo</a> •
-    <a href="https://github.com/AdityaBirangal/PayMNEE">📦 GitHub</a> •
+    <a href="https://github.com/AdityaBirangal/PayMNEE">📦 GitHub</a> 
   </p>
 </div>
 
@@ -110,3 +110,8 @@ PayMNEE enables:
 ## Contact
 
 - 💼 **LinkedIn**: [linkedin.com/in/AdityaBirangal](https://linkedin.com/in/AdityaBirangal)
+
+## License
+
+Copyright (c) 2026 Aditya Birangal  
+Licensed under the MIT License. See [LICENSE](LICENSE) for details.

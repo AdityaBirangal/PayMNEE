@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/components/layout/Header';
@@ -8,6 +10,29 @@ import { useActiveAccount } from 'thirdweb/react';
 
 export default function HomePage() {
   const account = useActiveAccount();
+  const router = useRouter();
+
+  // Auto-redirect to dashboard when wallet connects from home page (first time only)
+  useEffect(() => {
+    if (!account?.address) {
+      return;
+    }
+
+    // Check if this is the first time connecting (using localStorage)
+    const hasRedirectedBefore = localStorage.getItem('paymnee_has_redirected');
+    
+    if (!hasRedirectedBefore) {
+      // Mark as redirected
+      localStorage.setItem('paymnee_has_redirected', 'true');
+      
+      // Small delay to ensure wallet connection is fully established
+      const timer = setTimeout(() => {
+        router.push('/dashboard');
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [account?.address, router]);
 
   return (
     <div className="min-h-screen">
@@ -676,7 +701,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center">
-            <p className="text-sm">© 2024 PayMNEE. All rights reserved.</p>
+            <p className="text-sm">© {new Date().getFullYear()} PayMNEE. All rights reserved.</p>
             <p className="text-xs text-gray-500 mt-2">Built on Ethereum blockchain. Secure, transparent, and decentralized payments for everyone.</p>
           </div>
         </div>
